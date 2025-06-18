@@ -1,0 +1,84 @@
+# Client-specific ignores
+
+# Build output
+dist/
+build/
+out/
+public/build/
+
+# Vite
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Development
+.cache/
+.parcel-cache/
+.eslintcache
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# TypeScript
+*.tsbuildinfo
+.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+
+# Storybook
+storybook-static/
+
+# PWA
+sw.js
+workbox-*.js
+precache-manifest.*.js
+service-worker.js
+
+# Mobile app builds
+platforms/
+plugins/
+www/
+*.ipa
+*.apk
+*.aab
+
+# Capacitor
+android/
+ios/
+electron/
+
+# Static assets (if generated)
+public/assets/generated/
+
+# Bundle analyzer
+bundle-report.html
+webpack-bundle-analyzer-report.html
+
+# Temporary files
+.tmp/
+tmp/
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Source maps (uncomment if you don't want to track them)
+# *.map

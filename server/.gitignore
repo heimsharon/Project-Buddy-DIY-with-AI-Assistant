@@ -1,0 +1,73 @@
+# Server-specific ignores
+
+# Build output
+dist/
+build/
+*.js.map
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database
+*.sqlite
+*.db
+data/
+uploads/
+
+# Logs
+logs/
+*.log
+server.log
+error.log
+access.log
+
+# TypeScript
+*.tsbuildinfo
+.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Session storage
+sessions/
+
+# Cache
+.cache/
+redis-cache/
+
+# SSL certificates
+ssl/
+certs/
+*.pem
+*.key
+*.crt
+*.p12
+
+# PM2
+.pm2/
+ecosystem.config.js
+
+# Docker
+.dockerignore
+
+# API documentation
+docs/api/generated/
+
+# Backup files
+*.backup
+*.bak
+
+# OS specific
+.DS_Store
+Thumbs.db
