@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
 
     <!-- PWA primary meta tags -->
     <title>Your App Name</title>
     <meta name="title" content="Your App Name">
     <meta name="description" content="Description of your application">
+    <meta name="author" content="Your Name or Company">
+    <meta name="keywords" content="your,keywords,here">
 
     <!-- PWA manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -43,16 +47,19 @@
     <meta property="twitter:title" content="Your App Name">
     <meta property="twitter:description" content="Description of your application">
     <meta property="twitter:image" content="https://your-domain.com/thumbnail.png">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
 
-    <!-- No-JavaScript fallback -->
-    <noscript>
-      <div style="text-align: center; padding: 20px;">
-        Please enable JavaScript to run this application.
+  </head>
+
+  <body>
+
+<header>
+    <h1>Project Buddy</h1>
+
+
       </div>
+      <noscript>
+        <strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
   </body>
+   <script type="module" src="../../client/src/main.tsx"></script>
 </html>

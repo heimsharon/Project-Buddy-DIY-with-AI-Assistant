@@ -1,84 +1,44 @@
-# Client-specific ignores
+# =============================================================================
+# CLIENT-SPECIFIC GITIGNORE TEMPLATE
+# =============================================================================
+# React/Vite frontend patterns
 
-# Build output
+# =============================================================================
+# BUILD & STATIC FILES
+# =============================================================================
+# Client build outputs
 dist/
 build/
+
+# Framework builds
+.next/
 out/
+
+# Generated static files
 public/build/
+public/dist/
+public/static/build/
 
-# Vite
+# =============================================================================
+# CLIENT DEVELOPMENT
+# =============================================================================
+# Vite/React specific
+*.local
 .vite/
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
 
-# Development
-.cache/
-.parcel-cache/
+# Client cache files
 .eslintcache
+.stylelintcache
 
-# Environment variables
-.env
+# =============================================================================
+# CLIENT ENVIRONMENT
+# =============================================================================
+# Client environment files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# TypeScript
-*.tsbuildinfo
-.tsbuildinfo
-
-# Testing
-coverage/
-.nyc_output/
-test-results/
-cypress/videos/
-cypress/screenshots/
-playwright-report/
-test-results/
-
-# Storybook
-storybook-static/
-
-# PWA
-sw.js
-workbox-*.js
-precache-manifest.*.js
-service-worker.js
-
-# Mobile app builds
-platforms/
-plugins/
-www/
-*.ipa
-*.apk
-*.aab
-
-# Capacitor
-android/
-ios/
-electron/
-
-# Static assets (if generated)
-public/assets/generated/
-
-# Bundle analyzer
-bundle-report.html
-webpack-bundle-analyzer-report.html
-
-# Temporary files
-.tmp/
-tmp/
-
-# IDE
-.vscode/settings.json
-.idea/
-
-# OS specific
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Source maps (uncomment if you don't want to track them)
-# *.map
+# Client-specific configs
+vite.config.local.ts
+.env.client

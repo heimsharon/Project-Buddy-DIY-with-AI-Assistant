@@ -1,95 +1,82 @@
 {
-  "name": "project-buddy-diy-ai-assistant",
+  "name": "project-buddy-diy-with-ai-assistant-root",
   "version": "1.0.0",
-  "description": "An intelligent DIY project companion featuring AI-powered guidance, step-by-step instructions, and comprehensive project management tools for home improvement enthusiasts.",
-  "type": "module",
+  "description": "",
+  "author": "Sharon Heim <heimsharon3@gmail.com>",
+  "license": "MIT",
   "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
   "scripts": {
+    "// === QUICK START ===": "",
+    "install:all": "npm install",
     "dev": "npm run start:dev",
-    "start": "npm run client:build && npm run server",
-    "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
-    "build": "npm run client:build && npm run server:build",
-    "build:production": "NODE_ENV=production npm run build",
-    "server": "cd server && npm start",
-    "server:build": "cd server && npm run build",
-    "server:dev": "cd server && npm run dev",
-    "client:build": "cd client && npm run build",
-    "client:dev": "cd client && npm run dev",
-    "client:preview": "cd client && npm run preview",
-    "install:all": "npm ci && cd server && npm ci && cd ../client && npm ci",
-    "seed": "cd server && npm run seed",
-    "test": "npm run test:client && npm run test:server",
-    "test:client": "cd client && npm run test",
-    "test:server": "cd server && npm run test",
-    "lint": "npm run lint:client && npm run lint:server",
-    "lint:client": "cd client && npm run lint",
-    "lint:server": "cd server && npm run lint",
-    "lint:fix": "npm run lint:client -- --fix && npm run lint:server -- --fix",
-    "type-check": "npm run type-check:client && npm run type-check:server",
-    "type-check:client": "cd client && npm run type-check",
-    "type-check:server": "cd server && npm run type-check",
-    "clean": "rimraf client/dist server/dist client/.vite server/.tsbuildinfo",
-    "clean:install": "npm run clean && rimraf node_modules client/node_modules server/node_modules package-lock.json client/package-lock.json server/package-lock.json && npm run install:all",
-    "render-build": "npm run install:all && npm run build:production",
-    "prepare": "husky install || true"
+    "build": "npm run server:build && npm run client:build",
+    "start": "npm run server",
+    "test": "npm run test --workspaces",
+
+    "// === DEVELOPMENT ===": "",
+    "start:dev": "concurrently \"npm run server:dev\" \"npm run client:dev\" --names \"SERVER,CLIENT\" --prefix-colors \"blue,green\"",
+
+    "// === CLIENT COMMANDS ===": "",
+    "client:dev": "npm run dev --workspace=client",
+    "client:build": "npm run build --workspace=client",
+    "client:preview": "npm run preview --workspace=client",
+    "client:test": "npm run test --workspace=client",
+
+    "// === SERVER COMMANDS ===": "",
+    "server:dev": "npm run dev --workspace=server",
+    "server:build": "npm run build --workspace=server",
+    "server:start": "npm run start --workspace=server",
+    "server:test": "npm run test --workspace=server",
+
+    "// === TESTING ===": "",
+    "test:watch": "npm run test:watch --workspaces",
+    "test:coverage": "npm run test:coverage --workspaces",
+    "test:ui": "npm run test:ui --workspace=client",
+
+    "// === CODE QUALITY ===": "",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "lint:client": "eslint client --ext .ts,.tsx,.js,.jsx",
+    "lint:server": "eslint server --ext .ts,.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit && npm run type-check --workspaces --if-present",
+
+    "// === MAINTENANCE ===": "",
+    "clean": "npm run clean --workspaces --if-present && if exist dist rmdir /s /q dist",
+    "audit": "npm audit --workspaces",
+    "audit:fix": "npm audit fix --workspaces",
+    "audit:root": "npm audit",
+
+    "// === DEPENDENCY MANAGEMENT ===": "",
+    "deps:check": "npx syncpack list-mismatches",
+    "deps:fix": "npx syncpack fix-mismatches",
+    "deps:update": "npm update --workspaces",
+    "deps:sync": "npm run deps:check && npm run deps:fix"
   },
-  "keywords": [
-    "diy",
-    "project-management",
-    "ai-assistant",
-    "home-improvement",
-    "renovation",
-    "crafting",
-    "tools",
-    "materials",
-    "step-by-step",
-    "project-planning",
-    "budgeting",
-    "time-management",
-    "skill-development",
-    "safety-tips",
-    "troubleshooting",
-    "inspiration",
-    "community",
-    "react",
-    "typescript",
-    "pwa",
-    "mobile-app"
-  ],
-  "author": {
-    "name": "Sharon Heim",
-    "email": "sharon@example.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sharon-heim/project-buddy-diy-ai-assistant.git"
-  },
-  "bugs": {
-    "url": "https://github.com/sharon-heim/project-buddy-diy-ai-assistant/issues"
-  },
-  "homepage": "https://github.com/sharon-heim/project-buddy-diy-ai-assistant#readme",
-  "workspaces": [
-    "client",
-    "server"
-  ],
+  
   "devDependencies": {
-    "concurrently": "^9.0.1",
-    "husky": "^9.1.7",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
-    "wait-on": "^8.0.1"
-  },
-  "dependencies": {
-    "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5",
-    "mongodb": "^6.16.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-icons": "^5.5.0",
-    "react-markdown": "^10.1.0"
+    "syncpack": "^13.0.0",
+    "typescript": "^5.7.2"
   }
 }

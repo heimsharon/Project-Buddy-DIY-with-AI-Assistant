@@ -1,13 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const HomeContainer = styled.div`
-  text-align: center;
-`;
-
-const Title = styled.h1`
-  color: #333;
-`;
 
 const Home: React.FC = () => {
   return (

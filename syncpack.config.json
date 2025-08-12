@@ -1,0 +1,143 @@
+{  
+  "packages": [
+    "package.json",
+    "client/package.json",
+    "server/package.json"
+  ],
+
+  "versionGroups": [
+    {
+      "label": "core-shared",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom",
+        "@types/node",
+        "typescript",
+        "@typescript-eslint/parser",
+        "@typescript-eslint/eslint-plugin",
+        "eslint",
+        "eslint-config-prettier",
+        "eslint-plugin-import",
+        "prettier",
+        "rimraf"
+      ],
+      "packages": [
+        "*"
+      ],
+      "policy": "sameRange"
+    },
+
+    {
+      "label": "backend-shared",
+      "dependencies": [
+        "express",
+        "@types/express",
+        "cors",
+        "@types/cors",
+        "dotenv",
+        "@types/node",
+        "nodemon",
+        "ts-node",
+        "jsonwebtoken",
+        "@types/jsonwebtoken",
+        "bcryptjs",
+        "@types/bcryptjs"
+      ],
+      "packages": [
+        "package.json",
+        "server/package.json"
+      ],
+      "policy": "sameRange"
+    },
+
+    {
+      "label": "frontend-shared",
+      "dependencies": [
+        "vite",
+        "@vitejs/plugin-react",
+        "react-router-dom",
+        "@types/react-router-dom",
+        "js-cookie",
+        "@types/js-cookie"
+      ],
+      "packages": [
+        "package.json",
+        "client/package.json"
+      ],
+      "policy": "sameRange"
+    },
+
+    {
+      "label": "dev-tools",
+      "dependencies": [
+        "concurrently",
+        "wait-on",
+        "syncpack"
+      ],
+      "packages": [
+        "package.json"
+      ],
+      "policy": "sameRange"
+    }
+  ],
+
+  "semverGroups": [
+    {
+      "label": "production-deps",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "express",
+        "cors",
+        "dotenv",
+        "jsonwebtoken",
+        "bcryptjs",
+        "js-cookie"
+      ],
+      "packages": [
+        "*"
+      ],
+      "range": "^"
+    },
+
+    {
+      "label": "dev-deps",
+      "dependencies": [
+        "typescript",
+        "eslint",
+        "prettier",
+        "vite",
+        "@vitejs/plugin-react",
+        "nodemon"
+      ],
+      "packages": [
+        "*"
+      ],
+      "range": "^"
+    }
+  ],
+
+  "lint": {
+    "formatBugs": true,
+    "formatRepository": true,
+    "mismatches": true,
+    "semverRanges": true,
+    "versionGroups": true
+  },
+
+  "sortFirst": [
+    "name",
+    "version",
+    "description",
+    "author",
+    "license",
+    "private",
+    "workspaces",
+    "main",
+    "types",
+    "exports",
+    "scripts"
+  ]
+}

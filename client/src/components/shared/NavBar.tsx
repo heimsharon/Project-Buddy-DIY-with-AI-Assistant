@@ -1,44 +1,43 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link, NavLink } from 'react-router-dom';
+import  singleLevelDropdownMenu from './SingleLevelDropdownMenu'
+import { faList } from '@fortawesome/free-solid-svg-icons';
 
-const Nav = styled.nav`
-  padding: 1rem;
-  background-color: #f8f9fa;
-  margin-bottom: 2rem;
-`;
 
-const NavList = styled.ul`
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-`;
 
-const NavItem = styled.li`
-  a {
-    text-decoration: none;
-    color: #333;
-    &:hover {
-      color: #007bff;
-    }
-  }
-`;
+export default  function NavBar() {
+  return (
+    <nav className="navbar">
+      <div className="navbar-menus">
+    <NavLink to="/" className="nav-home">
+      Home
+    </NavLink>
+      <singleLevelDropdownMenu
+        buttonLabel="Projects"
+        menuItems={[
+
+          {
+          title: 'All Projects',
+          url: '/allprojects',
+          icon: <i className="fa-list" /> ,
+
+        {
+          title: 'Current Project',
+          url: '/current-projects',
+          icon: <i className="fas-solid fa-hammer " /> },
+
+        {
+          title: 'Create Project',
+           url: '/create-project',
+            icon: <i className="fas fa-plus" /> },
+      ]}
+      />
+        </div>
+
+
+
+
+
 
 const Navigation: React.FC = () => {
-  return (
-    <Nav>
-      <NavList>
-        <NavItem>
-          <Link to="/">Home</Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/about">About</Link>
-        </NavItem>
-      </NavList>
-    </Nav>
-  );
-};
 
-export default Navigation;

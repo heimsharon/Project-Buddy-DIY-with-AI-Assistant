@@ -1,168 +1,178 @@
-# Dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-.pnpm-store/
+# =============================================================================
+# UNIVERSAL ROOT GITIGNORE TEMPLATE
+# =============================================================================
 
-# Production builds
+# =============================================================================
+# DEPENDENCIES & PACKAGE MANAGERS
+# =============================================================================
+# Node.js
+node_modules/
+**/node_modules/
+
+# Package manager caches
+.npm/
+.yarn/
+.pnpm/
+
+# =============================================================================
+# BUILD OUTPUTS & COMPILED FILES
+# =============================================================================
+# Build directories
 dist/
 build/
 out/
 
-# Environment variables
+# Framework-specific builds
+.next/
+.nuxt/
+.output/
+.vite/
+
+# Compiled files
+*.js.map
+*.css.map
+*.d.ts
+*.tsbuildinfo
+
+# =============================================================================
+# ENVIRONMENT & CONFIGURATION
+# =============================================================================
+# Environment files
 .env
+.env.*
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
 .env.*.local
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+# Configuration files with secrets
+config/secrets.json
+config/private.json
 
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
-.nyc_output
+# =============================================================================
+# DEVELOPMENT & TESTING
+# =============================================================================
 
-# ESLint cache
-.eslintcache
+# Testing outputs
+test-results/
+test-reports/
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
 
-# TypeScript
-*.tsbuildinfo
-.tsbuildinfo
+# =============================================================================
+# LOGS & TEMPORARY FILES
+# =============================================================================
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Optional npm cache directory
-.npm
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+.cache/
 
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-
-# Vite
-.vite/
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-
-# Rollup
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# JSPM
-jspm_packages/
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-
-# IDE and Editor files
+# =============================================================================
+# EDITOR & IDE FILES
+# =============================================================================
+# VS Code (keep workspace settings, ignore user-specific)
 .vscode/
-.idea/
-*.swp
-*.swo
-*~
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# OS generated files
+# =============================================================================
+# OPERATING SYSTEM FILES
+# =============================================================================
+# macOS
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
+.AppleDouble
+.LSOverride
+
+# Windows
 Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+desktop.ini
+$RECYCLE.BIN/
 
-# Logs
-logs
-*.log
-lerna-debug.log*
-.pnpm-debug.log*
+# =============================================================================
+# MODERN WEB FRAMEWORKS & TOOLS
+# =============================================================================
+# React/Next.js
+.next/
+out/
 
-# Testing
-coverage/
-.nyc_output/
-junit.xml
+# Vite
+*.local
 
-# Temporary folders
-tmp/
-temp/
+# Monorepo tools
+.nx/
 
-# Database
-*.sqlite
-*.db
+# =============================================================================
+# DATABASE & DATA FILES
+# =============================================================================
 
-# Certificates
+# *.sqlite
+# *.sqlite3
+# *.db-journal
+# *.db-wal
+# *.db-shm
+
+# Database exports (usually temporary)
+*.sql
+*.dump
+
+# =============================================================================
+# DEPLOYMENT
+# =============================================================================
+# Modern hosting platforms
+.vercel/
+.netlify/
+.railway/
+
+# Infrastructure as code
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# =============================================================================
+# SECURITY & SECRETS
+# =============================================================================
+# Private keys
 *.pem
 *.key
 *.crt
 
-# Mobile app specific
-*.ipa
-*.apk
-*.aab
+# API keys and tokens
+.env.keys
+secrets.json
+credentials.json
 
-# PWA service worker cache
-sw.js
-workbox-*.js
-
-# Storybook build outputs
-storybook-static
-
-# Miscellaneous
-.sass-cache/
-connect.lock
-typings/
-.angular/
-
-# Local development
-.local
-*.local
-
+# =============================================================================
+# TEMPORARY & MEDIA FILES
+# =============================================================================
 # Backup files
 *.bak
 *.backup
 
-# Lock files (uncomment if using yarn or pnpm exclusively)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
+# Temporary media processing
+*.tmp.mp4
+*.tmp.mov
+*_temp.*
+*_processing.*
+
+# =============================================================================
+
+

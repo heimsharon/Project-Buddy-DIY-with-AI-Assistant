@@ -1,0 +1,77 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Position variants for main dropdown */
+.dropdown-content--right {
+  left: 100%;
+  top: 0;
+}
+
+.dropdown-content--left {
+  right: 100%;
+  top: 0;
+}
+
+.dropdown-content--down {
+  left: 0;
+  top: 100%;
+}
+
+/* Submenu positioning */
+.dropdown-submenu {
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1001;
+}
+
+.dropdown-submenu--right {
+  left: 100%;
+  top: 0;
+}
+
+.dropdown-submenu--left {
+  right: 100%;
+  top: 0;
+}
+
+.dropdown-submenu--down {
+  left: 0;
+  top: 100%;
+}
+
+.dropdown-item {
+  position: relative;
+}
+
+
+.dropdown-button, .dropdown-item {
+  touch-action: manipulation; /* Removes 300ms delay */
+  -webkit-tap-highlight-color: transparent; /* Removes iOS highlight */
+}
+
+/* Increase touch targets for mobile */
+@media (max-width: 768px) {
+  .dropdown-button, .dropdown-item button, .dropdown-item a {
+    min-height: 44px; /* iOS target */
+    padding: 12px 16px;
+  }
+}
+
+/* Mobile-specific positioning */
+@media (max-width: 768px) {
+  .dropdown-content {
+    max-width: calc(100vw - 20px);
+  }
+}

@@ -1,74 +1,43 @@
 {
   "compilerOptions": {
-    /* Language and Environment */
     "target": "ES2022",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2022",
-      "WebWorker"
-    ],
-    "jsx": "react-jsx",
-    "useDefineForClassFields": true,
-
-    /* Modules */
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-
-    /* JavaScript Support */
+    "moduleResolution": "Node",
+    "lib": ["ES2022"],
+    "skipLibCheck": true,
     "allowJs": true,
     "checkJs": false,
-
-    /* Emit */
-    "noEmit": true,
-    "declaration": false,
-    "declarationMap": false,
-    "sourceMap": true,
-
-    /* Interop Constraints */
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "verbatimModuleSyntax": true,
-
-    /* Type Checking */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
     "noImplicitOverride": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "sourceMap": true,
 
-    /* Advanced */
-    "skipLibCheck": true,
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "noEmit": true
   },
-  "include": [
-    "client/src/**/*",
-    "client/public/**/*",
-    "reportWebVitals.ts",
-    "client/vite-env.d.ts"
-  ],
   "exclude": [
     "node_modules",
-    "client/dist",
-    "client/build",
-    "server/dist",
+    "dist",
+    "build",
+    "coverage",
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.spec.ts",
-    "**/*.spec.tsx"
+    "**/*.spec.tsx",
+    "eslint.config.js"
   ],
-  "ts-node": {
-    "esm": true
-  }
+  
+  "files": [],
+  "references": [{ "path": "./client" }, { "path": "./server" }]
 }
