@@ -1,7 +1,7 @@
 {
   "name": "project-buddy-diy-with-ai-assistant-root",
   "version": "1.0.0",
-  "description": "",
+  "description": "DIY Home Project planner, cost estimator, progress tracker and more",
   "author": "Sharon Heim <heimsharon3@gmail.com>",
   "license": "MIT",
   "private": true,
@@ -15,10 +15,9 @@
   },
   "scripts": {
     "// === QUICK START ===": "",
-    "install:all": "npm install",
     "dev": "npm run start:dev",
     "build": "npm run server:build && npm run client:build",
-    "start": "npm run server",
+    "start": "npm run server:start",
     "test": "npm run test --workspaces",
 
     "// === DEVELOPMENT ===": "",
@@ -36,39 +35,43 @@
     "server:start": "npm run start --workspace=server",
     "server:test": "npm run test --workspace=server",
 
-    "// === TESTING ===": "",
-    "test:watch": "npm run test:watch --workspaces",
-    "test:coverage": "npm run test:coverage --workspaces",
-    "test:ui": "npm run test:ui --workspace=client",
-
     "// === CODE QUALITY ===": "",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
-    "lint:client": "eslint client --ext .ts,.tsx,.js,.jsx",
-    "lint:server": "eslint server --ext .ts,.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:client": "eslint client --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "lint:server": "eslint server --ext .ts,.js",
     "type-check": "tsc --noEmit && npm run type-check --workspaces --if-present",
-
-    "// === MAINTENANCE ===": "",
-    "clean": "npm run clean --workspaces --if-present && if exist dist rmdir /s /q dist",
-    "audit": "npm audit --workspaces",
-    "audit:fix": "npm audit fix --workspaces",
-    "audit:root": "npm audit",
 
     "// === DEPENDENCY MANAGEMENT ===": "",
     "deps:check": "npx syncpack list-mismatches",
     "deps:fix": "npx syncpack fix-mismatches",
+    "deps:sync": "npm run deps:check && npm run deps:fix",
     "deps:update": "npm update --workspaces",
-    "deps:sync": "npm run deps:check && npm run deps:fix"
+
+    "// === MAINTENANCE ===": "",
+    "audit": "npm audit --workspaces",
+    "audit:fix": "npm audit fix --workspaces",
+    "audit:root": "npm audit",
+    "clean": "npm run clean --workspaces --if-present && rimraf dist",
+    
+    "// === TESTING ===": "",
+    "test:coverage": "npm run test:coverage --workspaces",
+    "test:ui": "npm run test:ui --workspace=client",
+    "test:watch": "npm run test:watch --workspaces"
   },
-  
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@eslint/js": "9.39.1",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@types/node": "24.10.1",
     "concurrently": "^9.1.0",
+    "dotenv-cli": "11.0.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.2",
+    "eslint-import-resolver-node": "0.3.9",
+    "eslint-import-resolver-typescript": "4.4.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.2",
@@ -77,6 +80,8 @@
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "syncpack": "^13.0.0",
-    "typescript": "^5.7.2"
+    "tsx": "4.21.0",
+    "typescript": "^5.8.2",
+    "wait-on": "9.0.3"
   }
 }

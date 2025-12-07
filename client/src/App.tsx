@@ -1,28 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import styled from 'styled-components';
-import Home from './pages/HomePage';
-import About from './pages/ActiveProject';
+import { Suspense } from 'react';
+import { RouterProvider } from 'react-router-dom';
+
+import { router } from '.router';
+
 import Navigation from './components/shared/NavBar';
+import './assets/styles/index.css';
 
-const AppContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-`;
-
-const App: React.FC = () => {
+export default function App() {
   return (
-    <Router>
-      <AppContainer>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </AppContainer>
-    </Router>
-  );
-};
 
-export default App;
+    <Suspense fallback={< div > Loading...</div >}>
+      <RouterProvider router={router} />
+    </Suspense >
+  );
+}

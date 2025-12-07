@@ -1,11 +1,10 @@
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
 
-// Vite configuration for a React project with Tailwind CSS
+// Vite configuration for a React project with styled-components
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
   resolve: {
     // Configure path aliases for easier imports
     alias: {

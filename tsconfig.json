@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "lib": ["ES2022"],
+    "moduleResolution": "node",
+    "lib": [
+      "ES2022"
+    ],
     "skipLibCheck": true,
     "allowJs": true,
     "checkJs": false,
@@ -23,7 +24,6 @@
     "resolveJsonModule": true,
     "declaration": false,
     "sourceMap": true,
-
     "noEmit": true
   },
   "exclude": [
@@ -37,7 +37,13 @@
     "**/*.spec.tsx",
     "eslint.config.js"
   ],
-  
   "files": [],
-  "references": [{ "path": "./client" }, { "path": "./server" }]
+  "references": [
+    {
+      "path": "./client"
+    },
+    {
+      "path": "./server"
+    }
+  ]
 }
