@@ -59,4 +59,9 @@ export interface UserData {
     blockedAt?: string | null;
     deletedAt?: string | null;
 
-};
+}
+
+export interface UserLogin {
+  username: string | null;
+  password: string | null;
+}
