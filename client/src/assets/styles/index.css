@@ -1,0 +1,33 @@
+@import './create-project-page.css';
+@import './error-page.css';
+@import './footer.css';
+@import './header.css';
+@import './login-page.css';
+@import './profile-page.css';
+@import './registration-page.css';
+
+/* === Message Styles ===*/
+
+/* Success Message */
+.success-message {
+    color: #28d72a;
+    background: #2b0006;
+    border: 1px solid #162b92;
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    font-size: 0.5rem;
+    font-weight: 500;
+}
+
+/* Error Message */
+.error-message {
+    color: #b71c1c;
+    background: #ffebee;
+    border: 1px solid #f436e7;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: 0.5rem;
+    font-weight: 500;
+}

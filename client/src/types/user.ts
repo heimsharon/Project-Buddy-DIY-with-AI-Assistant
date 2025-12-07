@@ -1,4 +1,4 @@
-export type User = {
+export interface UserData {
   id: number;
   username: string;
   email: string;
@@ -13,7 +13,7 @@ export type User = {
 
   // User Profile
   firstName: string | null;
-  lastName: string | null:
+  lastName: string | null;
   avatar?: string | null; 
 
   // User Timestamps
@@ -38,23 +38,23 @@ export type User = {
     
 // User Roll and Service Levels
   role:
-  'GUEST'
-  'USER'
-  'SERVICE_PROVIDER'
-  'MODERATOR'
-  'ADMIN'
+  'GUEST' |
+  'USER' |
+  'SERVICE_PROVIDER' |
+  'MODERATOR' |
+  'ADMIN' |
   'SUPER_ADMIN';
 
-  SERVICElEVEL?:
-    'FREE_TRIAL'
-    'MONTHLY'
+  serviceLevel?:
+    'FREE_TRIAL'|
+    'MONTHLY' |
     'ANNUAL'
     null;
 
   // User TimeStamps
     createdAt: string;
     updatedAt: string;
-    restTokenExpire?: string | null;
+    resetTokenExpire?: string | null;
     lockedUntil?:  string | null;
     blockedAt?: string | null;
     deletedAt?: string | null;
