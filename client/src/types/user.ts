@@ -16,11 +16,12 @@ export type User = {
   lastName: string | null:
   avatar?: string | null; 
 
+  // User Timestamps
   isActive: boolean;
   isBlocked: boolean;
   blockedReason?: string | null;
-  blockedByUserId?: number | null;
-  deletedByUserId?: number | null;
+  blockedByUserId?: number | null; // Admin/Mod Ref
+  deletedByUserId?: number | null; // Admin/Mod Ref
 
    // other optional items
   // phoneNumber: string : null;
@@ -34,7 +35,8 @@ export type User = {
     //zipCode: string | null;
     //county: string | null;
     //Service address?
-
+    
+// User Roll and Service Levels
   role:
   'GUEST'
   'USER'
