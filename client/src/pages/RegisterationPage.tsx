@@ -37,7 +37,7 @@ async function submit(e: FormEvent) {
   const hasSpecial = /[^\w\s]/.test(payload.password);
 
   if (!hasUpper || !hasSpecial) {
-    setError("Password Must Include at Least One Uppercase, One Special Character and be a Length of 10");
+    setError("Password Must Include at Least One Uppercase, One Special Character and be at least Length of 10");
     setIsLoading(false);
     return;
   }
