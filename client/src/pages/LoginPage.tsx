@@ -1,5 +1,5 @@
 
-import { useState, type FormEvent, type ChangeEvent } from "react";
+import { useState, use Navigate, type FormEvent, type ChangeEvent } from "react";
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
 
@@ -42,47 +42,68 @@ export default function LoginPage() {
   //};
 
   return (
-    <main className="login__background">
-      <div className="login"
+    <div className="login__background">
+      <main className="login"
         aria-label="Login Page with links to registration and forgot password">
         <div "login-logo"> </div>
       <header className="login__card-header"
       > Project Buddy
       </header>
 
-      <form className="form-input">
+      <form className="form-input"
+            onSubmit={handleSubmit}
+            autoComplete="off">
         {data ? (
           <p>
             Success! You May Now Head{''}
-            <link to="/"
+            <Link to="/"
             > To Your Dashboard.</Link>
           </p>
-        ) : (
-
-          <form onSubmit={handleSubmit}
-            autoComplete="off">
+        ) : (         
 
             <fieldset className="login__fieldset">
-            </fieldset>
-            <legend className="sr-only"
+                <legend className="sr-only"
             > Login Form
             </legend>
-//////////////</form>
-
+            </fieldset>
+          
 
             <label htmlFor="email"
-            
             > Email
             </label>
-            <Input
-              className="login__card-input"
+            <input... />
 
-    </main>
+            <label htmlFor="password"
+            > Password
+            </label>
+            <input.... />
+            <div className="remember-me--checkbox">
+              <input... />
+              <label...>Remember Me </label>
+            </div>
+            <button type="submit"
+            className="btn--primary"
+            > Login
+            </button>
+            </fieldset >
+            </form >
+    <div className="link__forgot-password">
+      <Link to="/forgot__password"
+        className="btn"
+      > Forgot Password?
+      </Link>
+      <Link to "registration"
+      className="btn"
+              > Need to Create an Account?
+    </Link>
+            </div >     
+          </main >
+          </div >
         )
 
 
-
-
-
-        }}
 }
+      };
+
+
+
