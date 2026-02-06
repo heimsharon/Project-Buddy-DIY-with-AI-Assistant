@@ -1,114 +1,157 @@
 
-import { useState, useNavigate, type FormEvent, type ChangeEvent } from "react";
-import { Link } from 'react-router-dom';
+import { useState, type FormEvent, type ChangeEvent } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 
 
+type LoginFormState = {
+  email: string;
+  password: string;
+};
+
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [formState, setFormState] = useState<LoginFormState>({
+    email: "",
+    password: ""
+  });
+  const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  //Bypass full login
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    navigate("/dashboard");
-  }
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setForm((prev) => ({ ...prev, [name]: value }));
+};
 
-  //Full login commented out to bypass login during development
-  //const Login () => {
-  //const [formState, setFormState] = useState({ email: '', password: '' });
-  //const [login, { error, data, loading }] = useLoginMutation(LOGIN_USER);
+async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  setError(null);
 
-  //const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //const { name, value } = e.target;
-  //setFormState((prev) => ({ ...prev, [name]: value }));
-  //};
+  //Bypass full login for development
+  setIsSuccess(true);
+  navigate("/dashboard");
+}
 
-  //const handleFormSubmit = async (e: FormEvent) => {
-  //e.preventDefault();
-  //try {
-  //const { data } = await login(
-  //{
-  //variables: { ...formState },
-  //}
-  //);
-  //Auth.login(data.login.token);
-  //} catch (e) {
-  //}
-  //setFormState({
-  //email:'',
-  //password:'',
-  //})
-  //};
+return (
+  <div className="login__background">
+    <main className="login">
+      <div className="login-logo" aria-hidden="true"> </div>
+      <h1 className="login__card-header"
+      > Project Buddy
+      </h1>
 
-  return (
-    <div className="login__background">
-      <main className="login"
-        aria-label="Login Page with links to registration and forgot password">
-        <div className="login-logo"> </div>
-        <header className="login__card-header"
-        > Project Buddy
-        </header>
+      <div className="form-input">
+        <form onSubmit={handleFormSubmit}
+          autoComplete="on"
+          noValidate>
 
-        <form className="form-input"
-          onSubmit={handleSubmit}
-          autoComplete="off">
-          {data ? (
-            <p>
-              Success! You May Now Head{''}
-              <Link to="/"
-              > To Your Dashboard.
-              </Link>
-            </p>
-          ) : (         
+          <fieldset className="login__fieldset">
+            <legend className="sr-only"
+            > Login Form
+            </legend>
 
-            <fieldset className="login__fieldset">
-              <legend className="sr-only"
-              > Login Form
-              </legend>
-            </fieldset>          
 
             <label htmlFor="email"
             > Email
             </label>
-            <input>
-            </input>           
+            <input
+              className="form--input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Your Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+              aria-required="true"
+              aria-invalid={!!error}
+              aria-describedby={error ?
+                "login-error" : undefined}
+              autoFocus
+            />
 
             <label htmlFor="password"
             > Password
             </label>
-            
-            <div className="remember-me--checkbox">             
-              <label htmlFor= "remember-me"
-              > Remember Me 
-              </label>
-            </div>
+            <input
+              className="form--input"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Your Password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              autoComplete="current-password"
+              aria-required="true"
+              aria-invalid={!!error}
+              aria-describedby={error ?
+                "register-error" : undefined}
+            />
+
+            {error && (
+              <div
+                className="error__message"
+                id="login-error"
+                role="alert"
+                aria-live="polite"
+              >
+                {error}
+              </div>
+            )}
+
+            {isSuccess && (
+              <div
+                className="success__message"
+                id="success__message"
+                role="status"
+                aria-live="polite"
+              > Logged In
+              </div>
+            )}
 
             <button type="submit"
-            className="btn--primary"
-            > Login
+              className="btn--primary"
+              disabled={isLoading}
+              > Login
             </button>
-            
-            </form >
+          </fieldset>
 
 
-        <div className="link__forgot-password">
-          <Link to="/forgot__password"
-            className="btn"
-          > Forgot Password?
-          </Link>
+          <div className="remember-me--checkbox">
+            <input
+              id="remember-me"
+              name="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <label htmlFor="remember-me"
+            > Remember Me
+            </label>
+          </div>
+        </form>
+      </div>
 
-          <Link to "registration"
+      <div className="link__forgot-password">
+        <Link to="/forgot__password"
           className="btn"
-              > Need to Create an Account?
-          </Link>
-        </div>
-        
-      
-      </main >
-    </div >
-        )
-  ;
-      }
+        > Forgot Password?
+        </Link>
+
+        <Link to="/registration"
+          className="btn"
+        > Need to Create an Account?
+        </Link>
+      </div>
+    </main >
+  </div >
+);
+  }
+
 
 
