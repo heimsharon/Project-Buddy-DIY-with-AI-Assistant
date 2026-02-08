@@ -1,34 +1,28 @@
-import { useSate, type ChangeEvent, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
+import { type ProfileUpdateFormProps } from '@/types/profile-update';
 
-interface ProfileUdeateFormProps {
-  email: string;
-  avatar: string | null;
-  onEmailChange: (email: string, password: string) => void;
-  onPasswordChange: (password: string) => void;
-  onAvatarChange: (avatar: string | null, password: string) => void;
-}
 
 export default function EmailUpdateForm({
   email,
-  password,
-}: ProfileUdeateFormProps) {
+  onEmailChange,
+}: ProfileUpdateFormProps) {
 
-  const [updatedEmail, setUpdatedEmail] = useSate(email);
-  const [emailCurrentPassword, setEmailCurrentPassword] = useSate('');
-  const [emailSuccess, setEmailSuccess] = useState(false);
-  const [emailError, setEmailError] = useSate<string | null>(null);
-  const [isLoading, setIsLoading] = useSate(false);
+  const [updatedEmail, setUpdatedEmail] = useState(email);
+  const [emailCurrentPassword, setEmailCurrentPassword] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleEmailChange(e: FormEvent) {
-    e.preventDefault()
+    e.preventDefault();
 
-      if (isLoading) return;
+    if (isLoading) return;
     setIsLoading(true);
-    setEmailSuccess(false);
-    setEmailError(null);
+    setIsSuccess(false);
+    setError(null);
 
     if (!emailCurrentPassword) {
-      setEmailError("Please Enter Your Current Password to Update Login/Account Email Address");
+      setError("Please Enter Your Current Password to Update Login/Account Email Address");
       setIsLoading(false);
       return;
     }
@@ -39,10 +33,10 @@ export default function EmailUpdateForm({
         emailCurrentPassword
       );
       setEmailCurrentPassword('');
-      setEmailSuccess(true);
+      setIsSuccess(true);
 
     } catch (err: any) {
-      setEmailError(err.message || "Failed to Update Email");
+      setError(err.message || "Failed to Update Email");
 
 
     } finally {
@@ -52,96 +46,102 @@ export default function EmailUpdateForm({
   }
 
   return (
-    <div className="profile-update-email__background">
-      <main className="profile-update-email__container"
-        aria-label="Profile Update Page"
+    <div className="update-email__background">
+      <main className="update-email__container"
+        aria-label="Profile Update Email Page"
       >
-        <h1 className="profile-update-email__page--header"
+        <h1 className="update-email__page--header"
         > Profile Email Update
         </h1>
 
-        <form
-          onSubmit={handleEmailChange}
-          autoComplete="on"
-        >
-          <fieldset
-            className="profile-update-email__fieldset"
-            disabled={isLoading}
+        <div className="form-input">
+          <form
+            onSubmit={handleEmailChange}
+            autoComplete="on"
           >
-            <legend className="sr-only"
-            > Update Email
-            </legend>
-            <h3
-              className="profile-update-email__form--header"
-            > Update Email
-            </h3>
-            <label htmlFor="updatedEmail"
-            > New Email
-            </label>
+            <fieldset
+              className="update-email__fieldset">
+              <legend className="sr-only"
+              > Update Email
+              </legend>
+              <h3
+                className="update-email__form--header"
+              > Update Email
+              </h3>
+              <label htmlFor="updatedEmail"
+              > New Email
+              </label>
 
-            <input
-              className="profile-update-email__form--input"
-              id="updatedEmail"
-              name="updatedEmail"
-              type="email"
-              value={updatedEmail}
-              onChange={e. => {
-              setUpdatedEmail(e.target.value);
-            setEmailError(null);
-                  }}
-            autoComplete="email"
-            aria-invalid={!!emailError}
-            area-describedby={emailError ?
-              "update-email-error" : undefined}
-            autoFocus
-                  />
+              <input
+                className="form--input"
+                id="updatedEmail"
+                name="updatedEmail"
+                type="email"
+                placeholder="Enter Your New Email Address Here."
+                value={updatedEmail}
+                onChange={(event) => {
+                  setUpdatedEmail(event.target.value);
+                  setError(null);
+                }}
+                autoComplete="email"
+                aria-invalid={!!error}
+                aria-describedby={error ?
+                  "update-email-error" : undefined}
+                autoFocus
+              />
 
-            <label htmlFor="emailCurrentPassword"
-            > Current Password
-            </label>
+              <label htmlFor="emailCurrentPassword"
+              > Current Password
+              </label>
 
-            <input
-              className="profile-update-email__form--input"
-              id="emailCurrentPassword"
-              name="emailCurrentPassword"
-              type="password"
-              value={emailCurrentPassword}
-              onChange={e => {
-                setEmailCurrentPassword(e.target.value);
-                setEmailError(null);
-              }}
-              autoComplete="current-password"
-              aria-invalid={!!emailError}
-              aria-describedby={emailError ?
-                "current-email-error" : undefined}
-            />
+              <input
+                className="form--input"
+                id="emailCurrentPassword"
+                name="emailCurrentPassword"
+                type="password"
+                value={emailCurrentPassword}
+                onChange={e => {
+                  setEmailCurrentPassword(e.target.value);
+                  setError(null);
+                }}
+                autoComplete="current-password"
+                aria-invalid={!!error}
+                aria-describedby={error ?
+                  "update-email-error" : undefined}
+              />
 
-            {isEmailSuccess && (
-              <div
-                className="profile-update-email--success"
-                role="status"
-              > Email Updated Successfully!
-              </div>
-            )}
+              {isSuccess && (
+                <div
+                  className="success__message"
+                  id="success__message"
+                  role="status"
+                  aria-live="polite"
+                > Email Updated Successfully!
+                </div>
+              )}
 
-            {emailError && (
-              <div
-                className="profile-update-email--error"
-                id="profile-update-email--error"
-                role="alert"
-              >
-                {emailError}
-              </div>
-            )}
+              {error && (
+                <div
+                  className="error__message"
+                  id="update-email-error"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {error}
+                </div>
+              )}
 
-            <button
-              type="btn--primary"
-            > Update Email
-            </button>
+              <button
+                className="btn--primary"
+                type="submit"
+              > Update Email
+              </button>
 
-          </fieldset>
-        </form>
+            </fieldset>
+          </form>
+        </div>
       </main>
     </div>
+
   );
 }
