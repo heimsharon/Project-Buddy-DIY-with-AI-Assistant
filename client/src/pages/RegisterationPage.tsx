@@ -15,8 +15,7 @@ function onChange(e: ChangeEvent<HTMLInputElement>) {
 
 async function submit(e: FormEvent) {
   e.preventDefault();
-  if (isLoading)
-    return;
+  if (isLoading) return;
   setIsLoading(true);
   setIsSuccess(false);
   setIsError(null);
@@ -74,6 +73,7 @@ return (
       <form
         onSubmit={submit}
         autoComplete="off"
+        aria-busy={isLoading}
         aria-describedby={error ?
           "registration-error" : undefined}
       >

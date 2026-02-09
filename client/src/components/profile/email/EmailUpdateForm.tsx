@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { type ProfileUpdateFormProps } from '@/types/profile-update';
-
+import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 
 export default function EmailUpdateForm({
   email,
@@ -9,9 +8,9 @@ export default function EmailUpdateForm({
 
   const [updatedEmail, setUpdatedEmail] = useState(email);
   const [emailCurrentPassword, setEmailCurrentPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   async function handleEmailChange(e: FormEvent) {
     e.preventDefault();
@@ -27,22 +26,28 @@ export default function EmailUpdateForm({
       return;
     }
 
+    const trimmedEmail = updatedEmail.trim();
+    if (!trimmedEmail) {
+      setError("Please enter a valid email address.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       await onEmailChange(
-        updatedEmail,
+        trimmedEmail,
         emailCurrentPassword
       );
       setEmailCurrentPassword('');
+      setUpdatedEmail('');//clearing updatedEmail on success
       setIsSuccess(true);
 
     } catch (err: any) {
       setError(err.message || "Failed to Update Email");
 
-
     } finally {
       setIsLoading(false);
     }
-
   }
 
   return (
@@ -58,16 +63,23 @@ export default function EmailUpdateForm({
           <form
             onSubmit={handleEmailChange}
             autoComplete="on"
+            aria-busy={isLoading}
+            aria-describedby={error ? "updated-email-error" : undefined}
           >
             <fieldset
-              className="update-email__fieldset">
+              className="update-email__fieldset"
+              disabled={isLoading}
+              >
+
               <legend className="sr-only"
               > Update Email
               </legend>
+
               <h3
                 className="update-email__form--header"
               > Update Email
               </h3>
+              
               <label htmlFor="updatedEmail"
               > New Email
               </label>
@@ -81,6 +93,7 @@ export default function EmailUpdateForm({
                 value={updatedEmail}
                 onChange={(event) => {
                   setUpdatedEmail(event.target.value);
+                  setIsSuccess(false);
                   setError(null);
                 }}
                 autoComplete="email"
@@ -102,6 +115,7 @@ export default function EmailUpdateForm({
                 value={emailCurrentPassword}
                 onChange={e => {
                   setEmailCurrentPassword(e.target.value);
+                  setIsSuccess(false);
                   setError(null);
                 }}
                 autoComplete="current-password"
@@ -126,14 +140,16 @@ export default function EmailUpdateForm({
                   id="update-email-error"
                   role="alert"
                   aria-live="polite"
+
                 >
-                  {error}
+                  {isLoading ?'Submitting...' : 'Updating'} {error}
                 </div>
               )}
 
               <button
                 className="btn--primary"
                 type="submit"
+                disabled={isLoading}
               > Update Email
               </button>
 
