@@ -15,11 +15,10 @@ export default function LoginPage() {
     email: "",
     password: ""
   });
-  const [error, setError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [rememberMe, setRememberMe] = useState(false);
-
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,7 +37,10 @@ export default function LoginPage() {
   return (
     <div className="login__background">
       <main className="login">
-        <div className="login-logo" aria-hidden="true"> </div>
+        <div
+          className="login-logo"
+          aria-hidden="true">
+        </div>
         <h1 className="login__card-header"
         > Project Buddy
         </h1>
@@ -49,10 +51,10 @@ export default function LoginPage() {
             noValidate>
 
             <fieldset className="login__fieldset">
+
               <legend className="sr-only"
               > Login Form
               </legend>
-
 
               <label htmlFor="email"
               > Email
@@ -92,18 +94,6 @@ export default function LoginPage() {
                 aria-describedby={error ?
                   "login-error" : undefined}
               />
-
-              {error && (
-                <div
-                  className="error__message"
-                  id="login-error"
-                  role="alert"
-                  aria-live="polite"
-                >
-                  {error}
-                </div>
-              )}
-
               {isSuccess && (
                 <div
                   className="success__message"
@@ -114,14 +104,25 @@ export default function LoginPage() {
                 </div>
               )}
 
+              {error && (
+                <div
+                  className="error__message"
+                  id="login-error"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  {error}
+                </div>
+              )}
+
               <button
                 type="submit"
                 className="btn--primary"
                 disabled={isLoading}
               > Login
               </button>
-            </fieldset>
 
+            </fieldset>
 
             <div className="remember-me--checkbox">
               <input
