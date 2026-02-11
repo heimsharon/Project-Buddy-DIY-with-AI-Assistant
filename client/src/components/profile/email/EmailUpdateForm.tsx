@@ -52,10 +52,13 @@ export default function EmailUpdateForm({
 
   return (
     <div className="update-email__background">
-      <main className="update-email__container"
+      <main
+        className="update-email__container"
         aria-label="Profile Update Email Page"
       >
-        <h1 className="update-email__page--header"
+
+        <h1
+          className="update-email__page--header"
         > Profile Email Update
         </h1>
 
@@ -69,9 +72,10 @@ export default function EmailUpdateForm({
             <fieldset
               className="update-email__fieldset"
               disabled={isLoading}
-              >
+            >
 
-              <legend className="sr-only"
+              <legend
+                className="sr-only"
               > Update Email
               </legend>
 
@@ -79,8 +83,9 @@ export default function EmailUpdateForm({
                 className="update-email__form--header"
               > Update Email
               </h3>
-              
-              <label htmlFor="updatedEmail"
+
+              <label
+                htmlFor="updatedEmail"
               > New Email
               </label>
 
@@ -103,7 +108,8 @@ export default function EmailUpdateForm({
                 autoFocus
               />
 
-              <label htmlFor="emailCurrentPassword"
+              <label
+                htmlFor="emailCurrentPassword"
               > Current Password
               </label>
 
@@ -141,8 +147,7 @@ export default function EmailUpdateForm({
                   role="alert"
                   aria-live="polite"
 
-                >
-                  {isLoading ?'Submitting...' : 'Updating'} {error}
+                > {isLoading ? 'Submitting...' : 'Updating'} {error}
                 </div>
               )}
 
@@ -158,6 +163,5 @@ export default function EmailUpdateForm({
         </div>
       </main>
     </div>
-
   );
 }

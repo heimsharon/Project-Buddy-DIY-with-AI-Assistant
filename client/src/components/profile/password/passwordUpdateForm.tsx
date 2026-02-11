@@ -1,19 +1,18 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 
-import { type ProfileUpdateFormProps } from '@/types/profile-update';
-
-export default function PasswordUpdateForm({
+export default function ChangePasswordForm({
   password,
   onPasswordChange,
 }: ProfileUpdateFormProps) {
 
   const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handlePasswordChange(e: FormEvent) {
+  async function handleChangePassword(e: FormEvent) {
     e.preventDefault();
 
     if (isLoading) return;
@@ -21,7 +20,37 @@ export default function PasswordUpdateForm({
     setIsSuccess(false);
     setError(null);
 
-    if (!newPassword !== confirmNewPassword) {
+    if (newPassword.length < 10) {
+      setError("Password to Short;Must Be at Least 10 Characters");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[A-Z]/.test(newPassword)) {
+      setError("Password Must Include at Least One Uppercase Letter.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[a-z]/.test(newPassword)) {
+      setError("Password Must Include at Least One Lowercase Letter.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[0-9]/.test(newPassword)) {
+      setError("Password Must Include at Least One Digit.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[^\w\s]/.test(newPassword)) {
+      setError("Password Must Include at Least One Special Character".);
+      setIsLoading(false);
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
       setError("Passwords Do Not Match");
       setIsLoading(false);
       return;
@@ -32,11 +61,11 @@ export default function PasswordUpdateForm({
         newPassword
       );
       setNewPassword('');
-      setConfirmNewPassword('');
+      setConfirmPassword('');
       setIsSuccess(true);
 
     } catch (err: any) {
-      setError(err.message || "Failed to Update Password");
+      setError(err.message || "Failed to Change Password");
 
     } finally {
       setIsLoading(false);
@@ -44,80 +73,86 @@ export default function PasswordUpdateForm({
   }
 
   return (
-    <div
-      className="update-password-page__background">
+    <div className="change-password-page__background">
       <main
-        className="update-password__container"
-        aria-label="Update Password Page">
+        className="change-password__container"
+        aria-label="Change Password Page"
+      >
 
         <h1
-          className="update-password__page--header"
-        > Password Update
+          className="change-password__page--header"
+        >  Change Password
         </h1>
 
         <div className="form-input">
           <form
-            onSubmit={handlePasswordChange}
-            autoComplete="off"
+            onSubmit={handleChangePassword}
+            autoComplete="new-password"
             aria-busy={isLoading}
-            aria-describedby={error ? "update-password-error" : undefined}
+            aria-describedby={error ? "change-password-error" : undefined}
           >
+
             <fieldset
-              className="update-password__fieldset"
+              className="change-password__fieldset"
               disabled={isLoading}
             >
 
               <legend
                 className="sr-only"
-              > Update Password
+              > Change Password
               </legend>
 
               <h3
-                className="update-password-form__card--header"
-              > Update Password
+                className="change-password-form__card--header"
+              > Change Password
               </h3>
 
-              <label htmlFor="updatePassword"
+              <label
+                htmlFor="newPassword"
               > New Password
               </label>
 
               <input
                 className="form--input"
-                id="updatePassword"
-                name="updatePassword"
+                id="newPassword"
+                name="newPassword"
                 type="password"
-                placeholder="Enter Your New Password Here"
+                placeholder="Enter Your New Password"
                 value={newPassword}
                 onChange={(event) => {
                   setNewPassword(event.target.value);
                   setIsSuccess(false);
                   setError(null);
                 }}
-                autoComplete="update-password"
+                autoComplete="new-password"
+                pattern="(?=.*[A-Z])(?=.*[^\w\s]).{10,}"
+                title="At Least 10 Characters, 1 uppercase and 1 special character"
+                aria-required="true"
                 aria-invalid={!!error}
-                aria-describedby={error ? "update-password-error" : undefined}
-                autoFucus
+                aria-describedby={error ? "change-password-error" : undefined}
+                autoFocus
               />
 
               <label
-                htmlFor="confirmNewPassword"
+                htmlFor="confirmPassword"
               > Confirm New Password
               </label>
 
               <input
                 className="form--input"
-                id="confirmNewPassword"
-                name="confirmNewPassword"
+                id="confirmPassword"
+                name="confirmPassword"
                 type="password"
-                value={confirmNewPassword}
-                onChange={event {
-                        setConfirmNewPassword(event, EventTarget.value);
-              setError(null);
-                      }}
-              autoComplete="confirm-new-password"
-              aria-invalid={!!error}
-              aria-describedby={error ? "confirm-new-password-error" : undefined}
-                      />
+                placeholder="Confirm New Password"
+                value={confirmPassword}
+                onChange={event => {
+                  setConfirmPassword(event.target.value);
+                  setError(null);
+                }}
+                autoComplete="new-password"
+                aria-invalid={!!error}
+                aria-describedby={error ? "confirm-password-error" : undefined}
+              />
 
               {isSuccess && (
                 <div
@@ -125,26 +160,28 @@ export default function PasswordUpdateForm({
                   id="success__message"
                   role="status"
                   aria-live="polite"
-                > Password Updated Successfully
+                > Password Changed Successfully
                 </div>
               )}
 
-              {error &&
+              {error && (
                 <div
                   className="error__message"
-                  id="update-password-error"
+                  id="change-password-error"
                   role="alert"
                   aria-live="polite"
 
-                > {isLoading ? 'Submitting...' : 'Updating'} {error}
-                </div>}
+                > {isLoading ? 'Submitting...' : ''} {error}
+                </div>
+              )}
 
               <button
                 className="btn--primary"
                 type="submit"
                 disabled={isLoading}
-              > Update Password
+              > Change Password
               </button>
+
             </fieldset>
           </form>
         </div>

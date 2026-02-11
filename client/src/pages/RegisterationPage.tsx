@@ -3,42 +3,74 @@ import { Link } from 'react-router-dom';
 
 export default function Registration() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [form, setForm] = useState({ username: '', email: '', password: '', confirmPassword: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState({ email: '', password: '', confirmPassword: '' });
 
-
-function onChange(e: ChangeEvent<HTMLInputElement>) {
-  setForm({ ...form, [e.target.name]: e.target.value });
-}
-
-async function submit(e: FormEvent) {
-  e.preventDefault();
-  if (isLoading) return;
-  setIsLoading(true);
-  setIsSuccess(false);
-  setIsError(null);
-
-  const payload = {
-    username: form.username.trim(),
-    email: form.email.trim(),
-    password: form.password
-  };
-
-  if (payload.password.length < 10) {
-    setError("Password to Short;Must Be at Least 10 Characters");
-    setIsLoading(false);
-    return;
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setError(null);
   }
 
-  const hasUpper = /[A-Z]/.test(payload.password);
-  const hasSpecial = /[^\w\s]/.test(payload.password);
+  function isValidEmail(email: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
-  if (!hasUpper || !hasSpecial) {
-    setError("Password Must Include at Least One Uppercase, One Special Character and be at least Length of 10");
-    setIsLoading(false);
-    return;
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
+    setIsSuccess(false);
+    setIsError(null);
+
+    const payload = {
+      username: form.username.trim(),
+      email: form.email.trim(),
+      password: form.password
+    };
+
+    if (!isValidEmail(payload.email)) {
+      setError("Invalid Email Format");
+      setIsLoading(false);
+      return;
+    }
+
+    if (payload.password.length < 10) {
+      setError("Password too Short. Must Be at Least 10 Characters");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[A-Z]/.test(payload.password)) {
+      setError("Password Must Include at Least One Uppercase Letter.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[a-z]/.test(payload.password)) {
+      setError("Password Must Include at Least One Lowercase Letter.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[0-9]/.test(payload.password)) {
+      setError("Password Must Include at Least One Digit.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/[^\w\s]/.test(payload.password)) {
+      setError("Password Must Include at Least One Special Character.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      setError("Passwords Do Not Match");
+      setIsLoading(false);
+      return;
+    }
   }
 
   try {
@@ -51,22 +83,25 @@ async function submit(e: FormEvent) {
     const data = await res.json().catch(() => ({}));
     if (!res.ok)
       throw new Error(data.error || 'Failed');
+
     setIsSuccess(true);
-    setForm({ username: '', email: '', password: '' });
+    setForm({ username: '', email: '', password: '', confirmPassword: '' });
     navigate('/profile-page');
+
   } catch (err: any) {
     setError(err.message || 'Failed');
+
   } finally {
     setIsLoading(false);
   }
 }
 
 return (
-  <div className="registration__background">
+  <div className="registration-page__background">
     <main className="registration"
       aria-label="Registration Page">
 
-      <header className="registration__card-header"
+      <header className="card-header"
       > Create Account
       </header>
 
@@ -91,7 +126,7 @@ return (
           > User Name
           </label>
           <input
-            className="registration__form--input"
+            className="form--input"
             id="username"
             name="username"
             type="text"
@@ -110,12 +145,13 @@ return (
           > Email
           </label>
           <input
-            className="registration__form--input"
+            className="form--input"
             id="email"
             name="email"
             type="email"
             value={form.email}
             onChange={onChange}
+            placeholder=" Enter You Email"
             required
             autoComplete="email"
             aria-required="true"
@@ -128,10 +164,11 @@ return (
           > Password
           </label>
           <input
-            className="registration__form--input"
+            className="form--input"
             id="password"
             name="password"
             type="password"
+            placeholder="Enter Your Password."
             value={form.password}
             onChange={onChange}
             required
@@ -142,6 +179,23 @@ return (
             aria-invalid={!!error}
             aria-describedby={error ?
               "registration-error" : undefined}
+          />
+
+          <label htmlFor="confirmPassword"
+          > Confirm Password
+          </label>
+          <input
+            className="form--input"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            value={form.confirmPassword}
+            onChange={onchange}
+            required
+            autoComplete="new-password"
+            aria-invalid={!!error}
+            aria-describedby={error ? "confirm-password-error" : undefined}
           />
 
           {isSuccess && (
@@ -165,19 +219,23 @@ return (
           )}
 
           <button
+            className="btn--primary"
             type="submit"
-            className="register__btn--submit"
             disabled={isLoading}
           >
-              {isLoading ? 'Creating...' : 'Register'}
-            </button>
-          </fieldset>
-        </form>
-        <Link to="login"
+            {isLoading ? 'Creating...' : 'Registering'}
+          </button>
+
+        </fieldset>
+      </form>
+
+      <Link
+        to="login"
         className="register__btn--login"
-        > Already Have an Account? Login
-        </Link>
-      </main>
-    </div>
-  );
+      > Already Have an Account? Login
+      </Link>
+
+    </main>
+  </div>
+);
 }
