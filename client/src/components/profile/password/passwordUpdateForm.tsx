@@ -169,9 +169,9 @@ export default function ChangePasswordForm({
                   className="error__message"
                   id="change-password-error"
                   role="alert"
-                  aria-live="polite"
-
-                > {isLoading ? 'Submitting...' : ''} {error}
+                  aria-live="assertive"
+                >
+                  {isLoading ? 'Submitting...' : ''} {error}
                 </div>
               )}
 
