@@ -6,7 +6,7 @@ export default function Registration() {
   const [form, setForm] = useState({ username: '', email: '', password: '', confirmPassword: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState({ email: '', password: '', confirmPassword: '' });
+  const [error, setError] = useState<string | null>(null);
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,7 +22,7 @@ export default function Registration() {
     if (isLoading) return;
     setIsLoading(true);
     setIsSuccess(false);
-    setIsError(null);
+    setError(null);
 
     const payload = {
       username: form.username.trim(),
@@ -66,176 +66,178 @@ export default function Registration() {
       return;
     }
 
-    if (newPassword !== confirmNewPassword) {
+    if (form.password !== form.confirmPassword) {
       setError("Passwords Do Not Match");
       setIsLoading(false);
       return;
     }
+
+
+    try {
+      const res = await fetch('/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type', 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok)
+        throw new Error(data.error || 'Failed');
+
+      setIsSuccess(true);
+      setForm({ username: '', email: '', password: '', confirmPassword: '' });
+      navigate('/profile-page');
+
+    } catch (err: any) {
+      setError(err.message || 'Failed');
+
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  try {
-    const res = await fetch('/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type', 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok)
-      throw new Error(data.error || 'Failed');
-
-    setIsSuccess(true);
-    setForm({ username: '', email: '', password: '', confirmPassword: '' });
-    navigate('/profile-page');
-
-  } catch (err: any) {
-    setError(err.message || 'Failed');
-
-  } finally {
-    setIsLoading(false);
-  }
-}
-
-return (
-  <div className="registration-page__background">
-    <main className="registration"
-      aria-label="Registration Page">
-
-      <header className="card-header"
-      > Create Account
-      </header>
-
-      <form
-        onSubmit={submit}
-        autoComplete="off"
-        aria-busy={isLoading}
-        aria-describedby={error ?
-          "registration-error" : undefined}
+  return (
+    <div className="registration-page__background">
+      <main
+        className="registration"
+        aria-label="Registration Page"
       >
 
-        <fieldset
-          className="register__fieldset"
-          disabled={isLoading}
+        <header className="card-header"
+        > Create Account
+        </header>
+
+        <form
+          onSubmit={submit}
+          autoComplete="off"
+          aria-busy={isLoading}
+          aria-describedby={error ?
+            "registration-error" : undefined}
         >
 
-          <legend className="sr-only"
-          > Registration Form
-          </legend>
-
-          <label htmlFor="username"
-          > User Name
-          </label>
-          <input
-            className="form--input"
-            id="username"
-            name="username"
-            type="text"
-            value={form.username}
-            onChange={onChange}
-            required
-            autoComplete="username"
-            aria-required="true"
-            aria-invalid={!!error}
-            aria-describedby={error ?
-              "registration-error" : undefined}
-            autoFocus
-          />
-
-          <label htmlFor="email"
-          > Email
-          </label>
-          <input
-            className="form--input"
-            id="email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={onChange}
-            placeholder=" Enter You Email"
-            required
-            autoComplete="email"
-            aria-required="true"
-            aria-invalid={!!error}
-            aria-describedby={error ?
-              "registration-error" : undefined}
-          />
-
-          <label htmlFor="password"
-          > Password
-          </label>
-          <input
-            className="form--input"
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter Your Password."
-            value={form.password}
-            onChange={onChange}
-            required
-            autoComplete="new-password"
-            pattern="(?=.*[A-Z])(?=.*[^\w\s]).{10,}"
-            title="At Least 10 Characters, 1 uppercase and 1 special character"
-            aria-required="true"
-            aria-invalid={!!error}
-            aria-describedby={error ?
-              "registration-error" : undefined}
-          />
-
-          <label htmlFor="confirmPassword"
-          > Confirm Password
-          </label>
-          <input
-            className="form--input"
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            value={form.confirmPassword}
-            onChange={onchange}
-            required
-            autoComplete="new-password"
-            aria-invalid={!!error}
-            aria-describedby={error ? "confirm-password-error" : undefined}
-          />
-
-          {isSuccess && (
-            <div
-              className="success__message"
-              id="success__message"
-              role="status"
-              aria-live="polite"
-            > Registered
-            </div>
-          )}
-
-          {error && (
-            <div
-              className="error__message"
-              id="registration-error"
-              role="alert"
-              aria-live="polite"
-            >{error}
-            </div>
-          )}
-
-          <button
-            className="btn--primary"
-            type="submit"
+          <fieldset
+            className="register__fieldset"
             disabled={isLoading}
           >
-            {isLoading ? 'Creating...' : 'Registering'}
-          </button>
 
-        </fieldset>
-      </form>
+            <legend className="sr-only"
+            > Registration Form
+            </legend>
 
-      <Link
-        to="login"
-        className="register__btn--login"
-      > Already Have an Account? Login
-      </Link>
+            <label htmlFor="username"
+            > User Name
+            </label>
+            <input
+              className="form--input"
+              id="username"
+              name="username"
+              type="text"
+              value={form.username}
+              onChange={onChange}
+              required
+              autoComplete="username"
+              aria-required="true"
+              aria-invalid={!!error}
+              aria-describedby={error ?
+                "registration-error" : undefined}
+              autoFocus
+            />
 
-    </main>
-  </div>
-);
+            <label htmlFor="email"
+            > Email
+            </label>
+            <input
+              className="form--input"
+              id="email"
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={onChange}
+              placeholder="Enter Your Email"
+              required
+              autoComplete="email"
+              aria-required="true"
+              aria-invalid={!!error}
+              aria-describedby={error ?
+                "registration-error" : undefined}
+            />
+
+            <label htmlFor="password"
+            > Password
+            </label>
+            <input
+              className="form--input"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter Your Password."
+              value={form.password}
+              onChange={onChange}
+              required
+              autoComplete="new-password"
+              pattern="(?=.*[A-Z])(?=.*[^\w\s]).{10,}"
+              title="At Least 10 Characters, 1 uppercase and 1 special character"
+              aria-required="true"
+              aria-invalid={!!error}
+              aria-describedby={error ?
+                "registration-error" : undefined}
+            />
+
+            <label htmlFor="confirmPassword"
+            > Confirm Password
+            </label>
+            <input
+              className="form--input"
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              value={form.confirmPassword}
+              onChange={onchange}
+              required
+              autoComplete="new-password"
+              aria-invalid={!!error}
+              aria-describedby={error ? "registration-error" : undefined}
+            />
+
+            {isSuccess && (
+              <div
+                className="success__message"
+                id="success__message"
+                role="status"
+                aria-live="polite"
+              > Registered
+              </div>
+            )}
+
+            {error && (
+              <div
+                className="error__message"
+                id="registration-error"
+                role="alert"
+                aria-live="polite"
+              >{error}
+              </div>
+            )}
+
+            <button
+              className="btn--primary"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating...' : 'Register'}
+            </button>
+
+          </fieldset>
+        </form>
+
+        <Link
+          to="login"
+          className="register__btn--login"
+        > Already Have an Account? Login
+        </Link>
+
+      </main>
+    </div>
+  );
 }

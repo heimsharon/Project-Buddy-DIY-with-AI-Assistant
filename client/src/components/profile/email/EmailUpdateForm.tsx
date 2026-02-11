@@ -1,6 +1,10 @@
 import { useState, type FormEvent } from 'react';
 import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+0[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 export default function EmailUpdateForm({
   email,
   onEmailChange,
@@ -12,23 +16,43 @@ export default function EmailUpdateForm({
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  function handleEmailBlur() {
+    const trimmedEmail = updatedEmail.trim();
+      if (!trimmedEmail) {
+        setError("Please Enter a Valid Email Address.");
+        setIsSuccess(false);
+        return;
+      }
+      if (!isValidEmail(trimmedEmail)) {
+        setError("Invalid Email Format.");
+        setIsSuccess(false);
+        return;
+      }
+      setError(null);
+  }
+
   async function handleEmailChange(e: FormEvent) {
     e.preventDefault();
 
     if (isLoading) return;
     setIsLoading(true);
     setIsSuccess(false);
-    setError(null);
-
+    
+    const trimmedEmail = updatedEmail.trim();
     if (!emailCurrentPassword) {
-      setError("Please Enter Your Current Password to Update Login/Account Email Address");
+      setError("Please Enter Your Current Password to Update Your Email Address");
+      setIsLoading(false);
+      return;
+    }
+  
+    if (!trimmedEmail) {
+      setError("Please Enter a Valid Email Address.");
       setIsLoading(false);
       return;
     }
 
-    const trimmedEmail = updatedEmail.trim();
-    if (!trimmedEmail) {
-      setError("Please enter a valid email address.");
+    if (!isValidEmail(trimmedEmail)) {
+      setError("Invalid Email Format");
       setIsLoading(false);
       return;
     }
@@ -41,9 +65,10 @@ export default function EmailUpdateForm({
       setEmailCurrentPassword('');
       setUpdatedEmail('');//clearing updatedEmail on success
       setIsSuccess(true);
+      setError(null);
 
     } catch (err: any) {
-      setError(err.message || "Failed to Update Email");
+      setError(err.message || "Failed to Update Email.");
 
     } finally {
       setIsLoading(false);
@@ -64,10 +89,11 @@ export default function EmailUpdateForm({
 
         <div className="form-input">
           <form
-            onSubmit={handleEmailChange}
+            onSubmit={handleEmailChangeSubmit}
             autoComplete="on"
             aria-busy={isLoading}
-            aria-describedby={error ? "updated-email-error" : undefined}
+            aria-describedby={error ?
+              "updated-email-error" : undefined}
           >
             <fieldset
               className="update-email__fieldset"
@@ -101,6 +127,7 @@ export default function EmailUpdateForm({
                   setIsSuccess(false);
                   setError(null);
                 }}
+                onBlur={handleEmailBlur}
                 autoComplete="email"
                 aria-invalid={!!error}
                 aria-describedby={error ?
@@ -145,9 +172,9 @@ export default function EmailUpdateForm({
                   className="error__message"
                   id="update-email-error"
                   role="alert"
-                  aria-live="polite"
-
-                > {isLoading ? 'Submitting...' : 'Updating'} {error}
+                  aria-live="assertive"
+                >
+                  {error}
                 </div>
               )}
 
