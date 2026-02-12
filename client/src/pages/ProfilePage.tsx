@@ -1,6 +1,12 @@
-import ( useEffect, useState ) from 'react';
-
-import (type UserData) from './types/user';
+import {useEffect, useState } from 'react';
+import { ProfileUpdateFormProps } from '@/types/profile-update';
+import {
+  ProfileAvatar,
+  AvatarUpdateForm,
+  EmailUpdateForm,
+  PasswordUpdateForm,
+  Settings
+} from '../assets/components/indexProfile';
 
 export default function ProfilePage() {
   const [ userData, setUserData] = useState<UserData | null>(null);
