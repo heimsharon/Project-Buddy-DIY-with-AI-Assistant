@@ -80,7 +80,7 @@ export default function ChangePasswordForm({
       >
 
         <h1
-          className="change-password__page--header"
+          className="change-password-page__header"
         >  Change Password
         </h1>
 

@@ -1,18 +1,18 @@
-type ProfileAvatarProps = {
+export interface AvatarImageProps = {
   avatarUrl?: string | null;
   name?: string | null;
   size?: number;
   className?: string;
-}
+} 
 
 const DEFAULT_AVATAR_SRC = '/default-avatar.svg';
 
-export default function ProfileAvatar({
+export default function AvatarImage({
   avatarUrl,
   name,
   size = 96,
   className,
-}: ProfileAvatarProps) {
+}: AvatarImageProps) {
   const safeAvatarUrl = avatarUrl?.trim() ? avatarUrl : DEFAULT_AVATAR_SRC;
   const altText = name?.trim() ? `${name} avatar` : 'User avatar';
 

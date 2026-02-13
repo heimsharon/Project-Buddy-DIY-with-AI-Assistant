@@ -23,7 +23,6 @@ export default function ProfileFields ({
   password,
   settings,
   onChange,
-
 }: ProfileFieldsProps) {
 
 
