@@ -2,13 +2,14 @@ import { useState, type ChangeEvent, type FormEvent, type DragEvent } from 'reac
 import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 import { AvatarImage } from './AvatarImage';
 
+const DEFAULT_AVATAR_SRC = '/default-avatar.svg';
 
 export default function AvatarUpdateForm({
   avatar,
   onAvatarChange,
 }: ProfileUpdateFormProps) {
 
-  const [updateAvatar, setUpdateAvatar] = useState(avatar);
+  const [updateAvatar, setUpdateAvatar] = useState<File | string | null>(avatar || DEFAULT_AVATAR_SRC);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -19,12 +20,13 @@ export default function AvatarUpdateForm({
     if (isLoading) return;
     setIsLoading(true);
     setIsSuccess(false);
+    setError(null);
 
     try {
       await onAvatarChange(
-        updateAvatar
+        updateAvatar;
       );
-      setUpdateAvatar('');
+      setUpdateAvatar(DEFAULT_AVATAR_SRC);
       setIsSuccess(true);
 
     } catch (err: any) {
@@ -35,23 +37,21 @@ export default function AvatarUpdateForm({
     }
   }
 
-
-  function isValidFile(file) {
-    return file &&
+  function isValidFile(file: File | null | undefined) {
+    return !!file &&
       file.type.startsWith('image/');
   }
 
   function handleFileSelect(e: ChangeEvent<HTMLInputElement>) {
 
-
-    const fileSelected = e.target.files?.[0];
-    if (!!fileSelected) {
+    const fileSelected = e.target.files?.[0] || null;
+    if (!fileSelected) {
       setError("Please Choose an Image File.");
       setIsSuccess(false);
       return;
     }
 
-    if (isValidFile(fileSelected)) {
+    if (!isValidFile(fileSelected)) {
       setError("Invalid File Type. Please select an Image File.")
       setIsSuccess(false);
       return;
@@ -60,13 +60,12 @@ export default function AvatarUpdateForm({
     setError(null)
     setIsSuccess(false)
     return;
-
   }
 
   function handleFileDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
-    const droppedFile = e.dataTransfer.files[0];
+    const droppedFile = e.dataTransfer.files[0] || null;
     if (!droppedFile) {
       setError("Please Add an Image File.")
       setIsSuccess(false);
@@ -81,7 +80,6 @@ export default function AvatarUpdateForm({
     setError(null);
     setIsSuccess(false)
   }
-
 
   return (
     <div className="update-avatar-page__background">
@@ -101,7 +99,7 @@ export default function AvatarUpdateForm({
             onSubmit={handleAvatarChange}
             autoComplete="update-avatar"
             aria-busy={isLoading}
-            area-describedby={error ? "update-avatar-error"
+            aria-describedby={error ? "update-avatar-error"
               : undefined}
           >
             <fieldset
@@ -130,23 +128,19 @@ export default function AvatarUpdateForm({
                 name="updateAvatar"
                 type="file"
                 placeholder="Choose Image File"
-                onChange={e =>
-                  setUpdateAvatar(e.target.files?.[0] || null);
-              setIsSuccess(false);
-              setError(null);
-                }
-              autoComplete="avatar"
-              aria-invalid={!!error}
-              aria-describedby={error ?
-                "update-avatar-error" : undefined}
-              autoFocus
+                onChange={handleFileSelect}
+                autoComplete="avatar"
+                aria-invalid={!!error}
+                aria-describedby={error ?
+                  "update-avatar-error" : undefined}
+                autoFocus
               />
 
               <div
                 className="avatar-drop-zone"
                 onDrop={handleFileDrop}
                 onDragOver={e => e.preventDefault()}
-              > Drag and Drop an Image here, or use file input below
+              > Drag and Drop an Image here
               </div>
 
               {isSuccess && (
@@ -174,15 +168,14 @@ export default function AvatarUpdateForm({
                 className="btn--primary"
                 type="submit"
                 disabled={isLoading}
-              > Updated Avatar
+              > Update Avatar
               </button>
 
             </fieldset>
           </form>
-
         </div>
       </main>
     </div>
   )
-}
+};
 
