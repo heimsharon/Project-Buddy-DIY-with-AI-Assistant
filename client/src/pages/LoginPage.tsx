@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <div className="login__background">
-      <main className="login">
+      <main className="login__container">
         <div
           className="login-logo"
           aria-hidden="true">
