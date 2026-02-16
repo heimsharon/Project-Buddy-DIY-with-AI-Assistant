@@ -4,7 +4,7 @@ import {
   AvatarUpdateForm,
   EmailUpdateForm,
   PasswordUpdateForm,
-  Settings
+  UserSettings
 } from "./indexProfile";
 
 interface ProfileFieldsProps {
@@ -12,8 +12,8 @@ interface ProfileFieldsProps {
   email: string;
   avatar?: string;
   password: string;
-  settings?: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  userSettings?: string[];
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ProfileFields ({
@@ -21,7 +21,7 @@ export default function ProfileFields ({
   email,
   avatar,
   password,
-  settings,
+  userSettings,
   onChange,
 }: ProfileFieldsProps) {
 
