@@ -5,7 +5,7 @@ import {
   AvatarUpdateForm,
   EmailUpdateForm,
   PasswordUpdateForm,
-  Settings
+  UserSettings
 } from '../assets/components/indexProfile';
 
 export default function ProfilePage() {
@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const [ editMode, setEditMode] = useState(false);
   const [ isSuccess, setIsSuccess ] = useState(false);
   const [ error, setError ] = useState<string | null>(null);
-  const [ isLoading ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
 
 useEffect(() => {
