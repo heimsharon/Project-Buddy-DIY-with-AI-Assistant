@@ -15,7 +15,7 @@ export type Dimensions = {
 }
 
 export interface ProjectData {
-  id: number;
+  ticketNumber: string;
   userId: number;
   userName: string;
   projectName: string;
@@ -26,6 +26,6 @@ export interface ProjectData {
   startDay?: Date;
   projectEndDate?: Date;
   projectBudget?: number;
-  materials?: Material[];
+  materialIds: [ID];
   status: ProjectStatus;
 }

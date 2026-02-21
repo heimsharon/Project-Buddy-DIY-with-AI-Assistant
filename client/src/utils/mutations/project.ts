@@ -2,97 +2,131 @@ import { gql } from '@apollo/client';
 
 export const CREATE_PROJECT = gql`
   mutation createProject(
-    $title: String!,
-    $description: String,
-    $type: String,
-    $completionGoalDate: String,
-    $planedBudget: Float,
-    $forecastedBudget: Float,
-    $dimensions: DimensionsInput,
-    $materialIds: [ID],
-    $userID: ID!
+    $ticketNumber: String!
+    $userId: ID!
+    $userName: String
+    $projectName: String!
+    $description: String
+    $dimensions: DimensionsInput
+    $createdAt: Date
+    $updatedAt: Date
+    $startDay: Date
+    $projectEndDate: Date
+    $projectBudget: Float
+    $materialIds: [ID]
+    $status: ProjectStatus
   ) {
     createProject(
-      title: $title,
-      description: $description,
-      type: $type,
-      completionGoalDate: $completionGoalDate,
-      plannedBudget: $planedBudget,
-      forecastedBudget:$forecastedBudget,
-      dimensions: $dimensions,
-      materialIds: $materialIds,
+      ticketNumber: $ticketNumber
       userId: $userId
+      userName: $userName
+      projectName: $projectName
+      description: $description
+      dimensions: $dimensions
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+      startDay: $startDay
+      projectEndDate: $projectEndDate
+      projectBudget: $projectBudget
+      materialIds: $materialIds
+      status: $status
     ) {
-      _id
-      title
+      ticketNumber
+      userId
+      userName
+      projectName
       description
-      type
-      plannedBudget
-      forecastedBudget
       dimensions {
         length
         width
         height
-        depth
+        unit
       }
-      completionGoalDate
-    }  
-  }`;
-  
-  export const UPDATE_PROJECT = gql`
+      createdAt
+      updatedAt
+      startDay
+      projectEndDate
+      projectBudget
+      materialIds
+      status
+    }
+  }
+`;
+
+export const UPDATE_PROJECT = gql`
   mutation updateProject(
-    $id: ID!,
-    $title: String,
-    $description: String,
-    $type: String,
-    $completionGoalDate: String,
-    $plannedBudget: Float,
-    $forecastedBudget: Float,
-    $dimensions: DimensionsInput,  
+    $ticketNumber: String!
+    $userId: ID!
+    $userName: String
+    $projectName: String
+    $description: String
+    $dimensions: DimensionsInput
+    $createdAt: Date
+    $updatedAt: Date
+    $startDay: Date
+    $projectEndDate: Date
+    $projectBudget: Float
     $materialIds: [ID!]
+    $status: ProjectStatus
   ) {
     updateProject(
-      id: $id,
-      title: $title,
-      description: $description,
-      type: $type,
-      plannedBudger: $plannedBudget
-      forecastedBudget: $estimatedBudget,
-      dimensions: $dimensions,
+      ticketNumber: $ticketNumber
+      userId: $userId
+      userName: $userName
+      projectName: $projectName
+      description: $description
+      dimensions: $dimensions
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+      startDay: $startDay
+      projectEndDate: $projectEndDate
+      projectBudget: $projectBudget
       materialIds: $materialIds
-      ) {
-    _id
-    title
-    description
-    type
-    plannedBudget,
-    forecastedBudget,
-    dimensions {
-      length
-      width
-      height
-      depth
+      status: $status
+    ) {
+      ticketNumber
+      userId
+      userName
+      projectName
+      description
+      dimensions {
+        length
+        width
+        height
+        unit
+      }
+      createdAt
+      updatedAt
+      startDay
+      projectEndDate
+      projectBudget
+      materialIds
+      status
     }
-    completionGoalDate
   }
-}`;
-
+`;
 
 export const DELETE_PROJECT = gql`
-mutation deleteProject($id: ID!) {
-  deleteProject(id: $id) {
-    _id
-    title
-    description
-    plannedBudget
-    forecastedBudger
-    type
-    dimensions {
-      length
-      width
-      height
-      depth
+  mutation deleteProject($ticketNumber: String!) {
+    deleteProject(ticketNumber: $ticketNumber) {
+      ticketNumber
+      userId
+      userName
+      projectName
+      description
+      dimensions {
+        length
+        width
+        height
+        unit
+      }
+      createdAt
+      updatedAt
+      startDay
+      projectEndDate
+      projectBudget
+      materialIds
+      status
     }
-    completionGoalDate
   }
-}`
+`;
