@@ -36,7 +36,7 @@ export default function AvatarUpdateForm({
       setIsLoading(false);
     }
   }
-
+// update/add file types
   function isValidFile(file: File | null | undefined) {
     return !!file &&
       file.type.startsWith('image/');
@@ -140,7 +140,7 @@ export default function AvatarUpdateForm({
                 className="avatar-drop-zone"
                 onDrop={handleFileDrop}
                 onDragOver={e => e.preventDefault()}
-              > Drag and Drop an Image here
+              > Drag and Drop an Image File Here
               </div>
 
               {isSuccess && (
