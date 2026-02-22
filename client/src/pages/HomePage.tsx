@@ -1,20 +1,7 @@
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 export default function homepage() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    getProfile().then(profile => setUser(profile))
-      .catch(() => navigate('/login'));
-  } [navigate]);
-
-  if (!user) {
-    return <div> Loading....</div>;
-  }
 
   return (
     <div className="dashboard__background">

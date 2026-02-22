@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
-import { router } from '.router';
+import { router } from './router';
 
 import Navigation from './components/shared/NavBar';
 import './assets/styles/index.css';
