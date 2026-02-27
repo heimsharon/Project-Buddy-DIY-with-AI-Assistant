@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MenuItem, singleLevelDropdownMenuProps } from '../../types/menu';
+import { MenuItem, singleLevelDropdownMenuProps } from '../../types/menus';
 
 type position = 'left' | 'right' | `down` | `up`;
 

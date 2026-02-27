@@ -16,7 +16,7 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  // Authentication is handled by ProtectedRoute
+// auth via protected route
 }
 
 

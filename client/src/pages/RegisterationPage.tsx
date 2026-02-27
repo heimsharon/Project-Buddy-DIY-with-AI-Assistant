@@ -72,7 +72,6 @@ export default function Registration() {
       return;
     }
 
-
     try {
       const res = await fetch('/auth/register', {
         method: 'POST',

@@ -1,13 +1,13 @@
 export interface MenuItem {
   title: string;
   url?: string;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
   action?: () => void;
   submenu?: MenuItem[];
-
 }
 
-export interface SingleLevelDropdownMenuProps {
+export interface singleLevelDropdownMenuProps {
   buttonLabel: string;
-  items: MenuItem[];
+  menuItems: MenuItem[];
 }
+
