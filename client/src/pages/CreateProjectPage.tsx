@@ -4,6 +4,7 @@ import { useNavigate}
 import { ProjectData } from "@/types/project";
 //import auth 
 
+// add login auth check
 const steps = [ 'Project Details', 'Material Calculator', ] // Add additional 
 
 export default function CreateProjectPage() {

@@ -62,10 +62,10 @@ export interface ProjectData {
   projectName: string;
   description?: string;
   dimensions?: Dimensions;
-  createdAt: Date;
+  createdAt: string | null;
   updatedAt?: Date;
-  startDay?: Date;
-  projectEndDate?: Date;
+  startDay?:string | null;
+  projectEndDate?: string | null;
   projectBudget?: number;
   materialIds: [ID];
   status: ProjectStatus;
