@@ -9,11 +9,15 @@ import {
 } from '../assets/components/indexProfile';
 
 export default function ProfilePage() {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [editMode, setEditMode] = useState(false);
+    
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [editMode, setEditMode] = useState(false);
+
+
 
 
 // auth via protected route

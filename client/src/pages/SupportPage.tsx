@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 
 
 export default function SupportPage() {
-  const [formData, setFormData] = useState({ email: '', message: '' });
+  
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState('');
+
+  const [formData, setFormData] = useState({ email: '', message: '' });
 
   const validate = () => {
     const errors = {};

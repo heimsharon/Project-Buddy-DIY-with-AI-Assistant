@@ -2,11 +2,18 @@ import { useNavigate, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Registration() {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ username: '', email: '', password: '', confirmPassword: '' });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ 
+    username: '', 
+    email: '', 
+    password: '', 
+    confirmPassword: '' 
+  });
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });

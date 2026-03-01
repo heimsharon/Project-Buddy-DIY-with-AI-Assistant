@@ -10,15 +10,18 @@ type LoginFormState = {
 };
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const [formState, setFormState] = useState<LoginFormState>({
-    email: "",
-    password: ""
-  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
+
+  const [formState, setFormState] = useState<LoginFormState>({
+    email: "",
+    password: ""
+  }); 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -1,5 +1,39 @@
 import { Dimensions, UnitCoverage } from "./measurement-types";
 
+export enum ExteriorProjectType {  
+  Deck/Patio = 'Deck/Patio', 
+  Fencing = 'Fencing',
+  Landscaping = 'Landscaping',
+  Other = "Other",
+  Pool = 'Pool',
+  Roofing ='Roofing',  
+  Windows = 'Windows',    
+}
+
+export enum InteriorProjectType {  
+  Bathroom = 'Bathroom',
+  Bedroom = 'Bedroom',
+  Dining Room = 'Dining Room',
+  HVAC = 'HVAC',
+  Kitchen = 'Kitchen',  
+  Living/Family Room = 'Living/Family Room',
+  Other = 'Other',
+}
+
+export enum SubProjectType {
+  Carpentry = 'Carpentry',
+  Electrical = 'Electrical',
+  Flooring = 'Flooring',
+  Maintenance = 'Maintenance',
+  Masonry = 'Masonry',
+  NewBuild = 'NewBuild',
+  Other = 'Other',
+  Paint = 'Paint',
+  Plumbing = 'Plumbing',
+  Remodel = 'Remodel',  
+  Resurface = 'Resurface'  
+}
+
 export enum ProjectStatus {
   Planning = 'planning',
   Active = 'active',
@@ -15,14 +49,6 @@ export interface BudgetItem {
   projectBudget: number;
   actualCost?: number;
   category: 'materials' | 'labor' | 'tools' | 'other';
-}
-
-export interface Task {
-  id: string;
-  description: string;
-  projectEndDate?: Date;
-  status: ProjectStatus;
-  assignedTo?: string;
 }
 
 export interface Material {
@@ -47,6 +73,7 @@ export interface Material {
     | 'HVAC'
     | 'siding'
     | 'masonry';
+  imageUrl?: string;  
   unit: string;
   unitCoverage: UnitCoverage;
   quantity: number;
@@ -55,18 +82,32 @@ export interface Material {
   lastUpdated: Date;
 }
 
+export interface ProjectFormProps {
+  values: ProjectData;
+  onChange: (values: ProjectData) => void;
+}
+
+export interface Task {
+  id: string;
+  description: string;
+  projectEndDate?: Date;
+  status: ProjectStatus;
+  assignedTo?: string;
+}
+
 export interface ProjectData {
-  ticketNumber: string;
-  userId: number;
-  userName: string;
   projectName: string;
+  projectType?: InteriorProjectType | ExteriorProjectType;
+  subProjectType?: SubProjectType;
   description?: string;
+  completedSteps: number[];
+  currentStep?: number;
+  stepData: Record<number, any>;
   dimensions?: Dimensions;
-  createdAt: string | null;
-  updatedAt?: Date;
-  startDay?:string | null;
+  errors?: string[]
+  startDay?:string | null;  
   projectEndDate?: string | null;
   projectBudget?: number;
-  materialIds: [ID];
+  materials: Material[];
   status: ProjectStatus;
 }
