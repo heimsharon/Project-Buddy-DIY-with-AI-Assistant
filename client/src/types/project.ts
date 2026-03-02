@@ -97,17 +97,21 @@ export interface Task {
 
 export interface ProjectData {
   projectName: string;
+  description?: string;
+  startDay?:string | null;  
+  projectEndDate?: string | null;
+
   projectType?: InteriorProjectType | ExteriorProjectType;
   subProjectType?: SubProjectType;
-  description?: string;
+  
+  dimensions?: Dimensions;
+  materials: Material[];
+  projectBudget?: number;
+  
+  status: ProjectStatus;
+  errors?: string[]
+
   completedSteps: number[];
   currentStep?: number;
   stepData: Record<number, any>;
-  dimensions?: Dimensions;
-  errors?: string[]
-  startDay?:string | null;  
-  projectEndDate?: string | null;
-  projectBudget?: number;
-  materials: Material[];
-  status: ProjectStatus;
 }

@@ -1,20 +1,34 @@
 import { type ProjectData } from "@/types/project";
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 
 
 export default function ProjectDetails() {
-  const [forData, setForm] = useState<ProjectData | null>(null);
+  const [formData, setForm] = useState<ProjectData>({
+    projectName: '',
+    description: '',
+    startDate: '',
+    projectEndDate: '',
+    status: ProjectStatus.Planning,
+    materials: [],
+    completedSteps: []
+  stepData: {}
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setIsSuccess(false);
-    setError(false);
+    setError(null);
 
 
-    if (!)
+    if (!formData.)
   }
 
 

@@ -35,8 +35,16 @@ function getStepContent(step: number) {
     case 0:
       return (
         <ProjectDetailsStep
+
         /<
       );
+
+      case 1:
+        return (
+          <MaterialCalculatorStep
+
+          />
+        );
   }
 }
 }
