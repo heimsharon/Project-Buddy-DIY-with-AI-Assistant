@@ -24,7 +24,7 @@ export default function Registration() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  async function submit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (isLoading) return;
     setIsLoading(true);
@@ -82,7 +82,7 @@ export default function Registration() {
     try {
       const res = await fetch('/auth/register', {
         method: 'POST',
-        headers: { 'Content-Type', 'application/json' },
+        headers: { 'Content-Type' : 'application/json' },
         body: JSON.stringify(payload)
       });
 
@@ -114,7 +114,7 @@ export default function Registration() {
         </header>
 
         <form
-          onSubmit={submit}
+          onSubmit={handleSubmit}
           autoComplete="off"
           aria-busy={isLoading}
           aria-describedby={error ?
@@ -199,7 +199,7 @@ export default function Registration() {
               type="password"
               placeholder="Confirm Password"
               value={form.confirmPassword}
-              onChange={onchange}
+              onChange={onChange}
               required
               autoComplete="new-password"
               aria-invalid={!!error}

@@ -122,8 +122,8 @@ export default function EmailUpdateForm({
                 type="email"
                 placeholder="Enter Your New Email Address Here."
                 value={updatedEmail}
-                onChange={(event) => {
-                  setUpdatedEmail(event.target.value);
+                onChange={(e) => {
+                  setUpdatedEmail(e.target.value);
                   setIsSuccess(false);
                   setError(null);
                 }}

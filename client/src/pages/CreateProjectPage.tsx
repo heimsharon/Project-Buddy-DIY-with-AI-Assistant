@@ -4,8 +4,8 @@ import { useNavigate}
 import { ProjectData } from "@/types/project";
 //import auth 
 
-// add login auth check
-const steps = [ 'Project Details', 'Material Calculator', ] // Add additional steps 
+// Todo add login auth check and additional steps
+const steps = [ 'Project Details', 'Material Calculator', ] 
 
 export default function CreateProjectPage() {
 
