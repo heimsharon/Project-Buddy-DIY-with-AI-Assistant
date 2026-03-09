@@ -1,22 +1,22 @@
-import { Dimensions, UnitCoverage } from "./measurement-types";
+import { Dimensions, UnitCoverage } from './measurement-types';
 
-export enum ExteriorProjectType {  
-  Deck/Patio = 'Deck/Patio', 
+export enum ExteriorProjectType {
+  DeckPatio = 'Deck/Patio',
   Fencing = 'Fencing',
   Landscaping = 'Landscaping',
-  Other = "Other",
+  Other = 'Other',
   Pool = 'Pool',
-  Roofing ='Roofing',  
-  Windows = 'Windows',    
+  Roofing = 'Roofing',
+  Windows = 'Windows',
 }
 
-export enum InteriorProjectType {  
+export enum InteriorProjectType {
   Bathroom = 'Bathroom',
   Bedroom = 'Bedroom',
-  Dining Room = 'Dining Room',
+  DiningRoom = 'Dining Room',
   HVAC = 'HVAC',
-  Kitchen = 'Kitchen',  
-  Living/Family Room = 'Living/Family Room',
+  Kitchen = 'Kitchen',
+  LivingFamilyRoom = 'Living/Family Room',
   Other = 'Other',
 }
 
@@ -30,8 +30,8 @@ export enum SubProjectType {
   Other = 'Other',
   Paint = 'Paint',
   Plumbing = 'Plumbing',
-  Remodel = 'Remodel',  
-  Resurface = 'Resurface'  
+  Remodel = 'Remodel',
+  Resurface = 'Resurface',
 }
 
 export enum ProjectStatus {
@@ -73,7 +73,7 @@ export interface Material {
     | 'HVAC'
     | 'siding'
     | 'masonry';
-  imageUrl?: string;  
+  imageUrl?: string;
   unit: string;
   unitCoverage: UnitCoverage;
   quantity: number;
@@ -89,8 +89,8 @@ export interface ProjectFormProps {
 
 export interface Task {
   id: string;
-  description: string;
-  projectEndDate?: Date;
+  description?: string;
+  endDate?: Date;
   status: ProjectStatus;
   assignedTo?: string;
 }
@@ -98,18 +98,18 @@ export interface Task {
 export interface ProjectData {
   projectName: string;
   description?: string;
-  startDay?:string | null;  
-  projectEndDate?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
 
   projectType?: InteriorProjectType | ExteriorProjectType;
   subProjectType?: SubProjectType;
-  
+
   dimensions?: Dimensions;
   materials: Material[];
   projectBudget?: number;
-  
+
   status: ProjectStatus;
-  errors?: string[]
+  errors?: string[];
 
   completedSteps: number[];
   currentStep?: number;
