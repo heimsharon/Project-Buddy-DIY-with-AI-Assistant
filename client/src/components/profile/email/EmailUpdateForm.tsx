@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+
 import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 
 function isValidEmail(email: string) {

@@ -45,7 +45,7 @@ export default function ChangePasswordForm({
     }
 
     if (!/[^\w\s]/.test(newPassword)) {
-      setError("Password Must Include at Least One Special Character".);
+      setError("Password Must Include at Least One Special Character.");
       setIsLoading(false);
       return;
     }

@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
 import { getProfile } from '../utils/auth';
 
 // Set to true to bypass login for development
