@@ -11,7 +11,6 @@ import jsA11y from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default [
