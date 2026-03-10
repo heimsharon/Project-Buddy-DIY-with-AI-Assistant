@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     // Client-specific overrides
     "target": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
