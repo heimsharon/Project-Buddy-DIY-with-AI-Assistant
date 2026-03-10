@@ -36,7 +36,6 @@ export default function ProjectDetails() {
     }
   }, []);
 
-
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
 

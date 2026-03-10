@@ -18,23 +18,19 @@
     "dev": "npm run start:dev",
     "build": "npm run server:build && npm run client:build",
     "start": "npm run server:start",
-    "test": "npm run test --workspaces",
-
+    "test": "npm run test --workspaces --if-present",
     "// === DEVELOPMENT ===": "",
     "start:dev": "concurrently \"npm run server:dev\" \"npm run client:dev\" --names \"SERVER,CLIENT\" --prefix-colors \"blue,green\"",
-
     "// === CLIENT COMMANDS ===": "",
     "client:dev": "npm run dev --workspace=client",
     "client:build": "npm run build --workspace=client",
     "client:preview": "npm run preview --workspace=client",
     "client:test": "npm run test --workspace=client",
-
     "// === SERVER COMMANDS ===": "",
     "server:dev": "npm run dev --workspace=server",
     "server:build": "npm run build --workspace=server",
     "server:start": "npm run start --workspace=server",
     "server:test": "npm run test --workspace=server",
-
     "// === CODE QUALITY ===": "",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -43,25 +39,21 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "lint:server": "eslint server --ext .ts,.js",
     "type-check": "tsc --noEmit && npm run type-check --workspaces --if-present",
-
     "// === DEPENDENCY MANAGEMENT ===": "",
     "deps:check": "npx syncpack list-mismatches",
     "deps:fix": "npx syncpack fix-mismatches",
     "deps:sync": "npm run deps:check && npm run deps:fix",
     "deps:update": "npm update --workspaces",
-
     "// === MAINTENANCE ===": "",
     "audit": "npm audit --workspaces",
     "audit:fix": "npm audit fix --workspaces",
     "audit:root": "npm audit",
     "clean": "npm run clean --workspaces --if-present && rimraf dist",
-
     "// === TESTING ===": "",
-    "test:coverage": "npm run test:coverage --workspaces",
-    "test:ui": "npm run test:ui --workspace=client",
-    "test:watch": "npm run test:watch --workspaces"
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
+    "test:ui": "npm run test:ui --workspace=client --if-present",
+    "test:watch": "npm run test:watch --workspaces --if-present"
   },
-  
   "devDependencies": {
     "@eslint/js": "9.39.1",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
@@ -69,7 +61,7 @@
     "@types/node": "24.10.1",
     "concurrently": "^9.1.0",
     "dotenv-cli": "11.0.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^9.1.2",
     "eslint-import-resolver-node": "0.3.9",
     "eslint-import-resolver-typescript": "4.4.4",

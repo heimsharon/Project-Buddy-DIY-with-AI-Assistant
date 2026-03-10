@@ -7,6 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "test": "echo \"No client tests configured yet\"",
+    "test:coverage": "echo \"No client coverage configured yet\"",
+    "test:watch": "echo \"No client watch tests configured yet\"",
+    "test:ui": "echo \"No client UI tests configured yet\"",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --write .",
     "type-check": "tsc --noEmit"

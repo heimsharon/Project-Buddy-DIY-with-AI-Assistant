@@ -7,7 +7,7 @@ import tsParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import jsAlly from 'eslint-plugin-jsx-a11y';
+import jsA11y from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 
@@ -18,14 +18,14 @@ export default [
   js.configs.recommended,
 
   {
-    files: ['**/*.{js, jsx, ts, tsx'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
 
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
-      '**/build**',
+      '**/build/**',
       '**/coverage/**',
-      '**/*d.ts**',
+      '**/*.d.ts',
       '**/*.min.js',
       '**/css.map',
     ],
@@ -39,73 +39,75 @@ export default [
       },
 
       globals: {
+        ...globals.browser,
+        ...globals.node,
         console:'readonly',
         document:'readonly',
         HTMLElement: 'readonly',
         process: 'readonly',
-          window: 'readonly',
+        window: 'readonly',
       },
     },
 
-      plugins: {
+    plugins: {
       '@typescript-eslint': tsPlugin, react,
       'jsx-a11y': jsA11y, import: importPlugin,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      },
+    },
 
-      settings: {
-        react: {
-          version: 'detect' 
-        },
-          'import/resolver': {
-            typescript: {
-              alwaysTryTypes: true,
-              project: [
-                './tsconfig.json',
-                './client/tsconfig.json',
-                './server/tsconfig.json',
-              ],
-            },
+    settings: {
+      react: {
+        version: 'detect'
+      },
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: [
+            './tsconfig.json',
+            './client/tsconfig.json',
+            './server/tsconfig.json',
+          ],
         },
       },
+    },
 
-      rules: {
-        '@typescript-eslint/no-unused-vars': [
-          'warn',
-          { argsIgnorePattern: '^_' },
-        ],
-        '@typescript-eslint/no-explicit-any': 'warn',
-        'react/react-in-jsx-scope':'off',
-        'react/prop-types':'off',
-        'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'warn',
-        'react-refresh/only-export-components': [
-          'warn',
-          { allowConstantExport: true },
-        ],
-                
-        'import/order': [
-          'warn',
-          {
-            groups: [
-              'builtin',
-              'external',
-              'internal',
-              'parent',
-              'sibling',
-              'index',
-            ],
-            'newlines-between': 'always',
-          },
-        ],
-        'import/no-unresolved': 'error',
-        'jsx-a11y/alt-text': 'warn',
-        'jsx-a11y/anchor-is-valid': 'warn',
-        'no-console': 'warn',
-        'no-debugger': 'error',
-        'prefer-const': 'error',
-      },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'react/react-in-jsx-scope':'off',
+      'react/prop-types':'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+
+      'import/order': [
+        'warn',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
+          'newlines-between': 'always',
+        },
+      ],
+      'import/no-unresolved': 'error',
+      'jsx-a11y/alt-text': 'warn',
+      'jsx-a11y/anchor-is-valid': 'warn',
+      'no-console': 'warn',
+      'no-debugger': 'error',
+      'prefer-const': 'error',
+    },
     },
 
     {

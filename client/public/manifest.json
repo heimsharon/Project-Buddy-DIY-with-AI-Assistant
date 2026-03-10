@@ -1,7 +1,7 @@
 {
-  "name": "Your App Name",
-  "short_name": "App",
-  "description": "Description of your application",
+  "name": "Project Buddy DIY with AI Assistant",
+  "short_name": "ProjectBuddy",
+  "description": "DIY home project planner with budgeting, materials tracking, and AI guidance.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -60,8 +60,5 @@
   "dir": "ltr",
   "lang": "en-US",
   "display_override": ["standalone", "minimal-ui"],
-  "handle_links": "auto",
-  "edge_side_panel": {
-    "preferred_width": 400
-  }
+  "handle_links": "auto"
 }

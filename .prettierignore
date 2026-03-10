@@ -160,7 +160,6 @@ desktop.ini
 
 # Large data files (often have specific formatting)
 *.csv
-*.json
 *.xml
 !package.json
 !tsconfig.json
