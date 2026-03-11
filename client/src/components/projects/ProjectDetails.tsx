@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 
+import { projectDetailsSchema } from '../../../../shared/validators/project';
+
 const DRAFT_KEY = 'project-details-step-1';
 const AUTOSAVE_DELAY_MS = 800;
 
@@ -95,41 +97,9 @@ export default function ProjectDetails() {
     setIsSuccess(false);
     setError(null);
 
-    if (!formData.projectName.trim()) {
-      setError("Please Enter Project Details.");
-      setIsLoading(false);
-      return;
-    }
-
-    const startDate = formData.startDate?.trim() ?? '';
-    const endDate = formData.endDate?.trim() ?? '';
-
-    if (startDate && Number.isNaN(Date.parse(startDate))) {
-      setError("Start Date is invalid.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (endDate && Number.isNaN(Date.parse(endDate))) {
-      setError("End Date is invalid.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (startDate && endDate && endDate < startDate) {
-      setError("Start Date is Invalid.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (endDate && Number.isNaN(Date.parse(endDate))) {
-      setError("End Date is Invalid.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (startDate && endDate && endDate < startDate) {
-      setError("End Date Cannot be Earlier than Start Date.");
+    const validationResult = projectDetailsSchema.safeParse(formData);
+    if (!validationResult.success) {
+      setError(validationResult.error.issues[0]?.message ?? 'Invalid project details.');
       setIsLoading(false);
       return;
     }
@@ -168,8 +138,8 @@ export default function ProjectDetails() {
 
       // keeps current values so next autosave does not overwrite with blanks
 
-    } catch (error: any) {
-      setError(error.message || 'Failed');
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Failed');
     } finally {
       setIsLoading(false);
     }

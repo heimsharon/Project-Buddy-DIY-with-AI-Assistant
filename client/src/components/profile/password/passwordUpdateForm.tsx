@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 
+
 export default function ChangePasswordForm({
   password,
   onPasswordChange,
