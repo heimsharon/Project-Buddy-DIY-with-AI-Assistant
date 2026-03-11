@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 
-import { projectDetailsSchema } from '../../../../shared/validators/project';
+import { projectDetailsSchema } from '../../../../server/src/validators/project';
 
 const DRAFT_KEY = 'project-details-step-1';
 const AUTOSAVE_DELAY_MS = 800;

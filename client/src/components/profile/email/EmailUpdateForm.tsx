@@ -1,16 +1,12 @@
 import { useState, type FormEvent } from 'react';
 
 import { type ProfileUpdateFormProps } from '../../../types/profile-update';
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+0[^\s@]+\.[^\s@]+$/.test(email);
-}
+import { validateEmailField, validateEmailUpdateForm } from '../../../utils/validators/profile';
 
 export default function EmailUpdateForm({
   email,
   onEmailChange,
 }: ProfileUpdateFormProps) {
-
   const [updatedEmail, setUpdatedEmail] = useState(email);
   const [emailCurrentPassword, setEmailCurrentPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -18,59 +14,43 @@ export default function EmailUpdateForm({
   const [error, setError] = useState<string | null>(null);
 
   function handleEmailBlur() {
-    const trimmedEmail = updatedEmail.trim();
-      if (!trimmedEmail) {
-        setError("Please Enter a Valid Email Address.");
-        setIsSuccess(false);
-        return;
-      }
-      if (!isValidEmail(trimmedEmail)) {
-        setError("Invalid Email Format.");
-        setIsSuccess(false);
-        return;
-      }
-      setError(null);
+    const result = validateEmailField(updatedEmail);
+    if (!result.isValid) {
+      setError(result.message);
+      setIsSuccess(false);
+      return;
+    }
+    setError(null);
   }
 
-  async function handleEmailChange(e: FormEvent) {
+  async function handleEmailChangeSubmit(e: FormEvent) {
     e.preventDefault();
-
     if (isLoading) return;
+
     setIsLoading(true);
     setIsSuccess(false);
-    
-    const trimmedEmail = updatedEmail.trim();
-    if (!emailCurrentPassword) {
-      setError("Please Enter Your Current Password to Update Your Email Address");
-      setIsLoading(false);
-      return;
-    }
-  
-    if (!trimmedEmail) {
-      setError("Please Enter a Valid Email Address.");
-      setIsLoading(false);
-      return;
-    }
 
-    if (!isValidEmail(trimmedEmail)) {
-      setError("Invalid Email Format");
+    const validation = validateEmailUpdateForm({
+      updatedEmail,
+      currentPassword: emailCurrentPassword,
+    });
+
+    if (!validation.isValid) {
+      setError(validation.message);
       setIsLoading(false);
       return;
     }
 
     try {
-      await onEmailChange(
-        trimmedEmail,
-        emailCurrentPassword
-      );
+      await onEmailChange(updatedEmail.trim(), emailCurrentPassword);
       setEmailCurrentPassword('');
-      setUpdatedEmail('');//clearing updatedEmail on success
+      setUpdatedEmail('');
       setIsSuccess(true);
       setError(null);
-
-    } catch (err: any) {
-      setError(err.message || "Failed to Update Email.");
-
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : 'Failed to update email.';
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -82,46 +62,26 @@ export default function EmailUpdateForm({
         className="update-email__container"
         aria-label="Profile Update Email Page"
       >
-
-        <h1
-          className="update-email__page--header"
-        > Profile Email Update
-        </h1>
+        <h1 className="update-email__page--header">Profile Email Update</h1>
 
         <div className="form-input">
           <form
             onSubmit={handleEmailChangeSubmit}
             autoComplete="on"
             aria-busy={isLoading}
-            aria-describedby={error ?
-              "updated-email-error" : undefined}
+            aria-describedby={error ? 'update-email-error' : undefined}
           >
-            <fieldset
-              className="update-email__fieldset"
-              disabled={isLoading}
-            >
+            <fieldset className="update-email__fieldset" disabled={isLoading}>
+              <legend className="sr-only">Update Email</legend>
+              <h3 className="update-email__form--header">Update Email</h3>
 
-              <legend
-                className="sr-only"
-              > Update Email
-              </legend>
-
-              <h3
-                className="update-email__form--header"
-              > Update Email
-              </h3>
-
-              <label
-                htmlFor="updatedEmail"
-              > New Email
-              </label>
-
+              <label htmlFor="updatedEmail">New Email</label>
               <input
                 className="form--input"
                 id="updatedEmail"
                 name="updatedEmail"
                 type="email"
-                placeholder="Enter Your New Email Address Here."
+                placeholder="Enter your new email address here."
                 value={updatedEmail}
                 onChange={(e) => {
                   setUpdatedEmail(e.target.value);
@@ -131,31 +91,25 @@ export default function EmailUpdateForm({
                 onBlur={handleEmailBlur}
                 autoComplete="email"
                 aria-invalid={!!error}
-                aria-describedby={error ?
-                  "update-email-error" : undefined}
+                aria-describedby={error ? 'update-email-error' : undefined}
                 autoFocus
               />
 
-              <label
-                htmlFor="emailCurrentPassword"
-              > Current Password
-              </label>
-
+              <label htmlFor="emailCurrentPassword">Current Password</label>
               <input
                 className="form--input"
                 id="emailCurrentPassword"
                 name="emailCurrentPassword"
                 type="password"
                 value={emailCurrentPassword}
-                onChange={e => {
+                onChange={(e) => {
                   setEmailCurrentPassword(e.target.value);
                   setIsSuccess(false);
                   setError(null);
                 }}
                 autoComplete="current-password"
                 aria-invalid={!!error}
-                aria-describedby={error ?
-                  "update-email-error" : undefined}
+                aria-describedby={error ? 'update-email-error' : undefined}
               />
 
               {isSuccess && (
@@ -164,7 +118,8 @@ export default function EmailUpdateForm({
                   id="success__message"
                   role="status"
                   aria-live="polite"
-                > Email Updated Successfully!
+                >
+                  Email updated successfully.
                 </div>
               )}
 
@@ -179,13 +134,9 @@ export default function EmailUpdateForm({
                 </div>
               )}
 
-              <button
-                className="btn--primary"
-                type="submit"
-                disabled={isLoading}
-              > Update Email
+              <button className="btn--primary" type="submit" disabled={isLoading}>
+                Update Email
               </button>
-
             </fieldset>
           </form>
         </div>
