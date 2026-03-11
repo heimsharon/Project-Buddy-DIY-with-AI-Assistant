@@ -11,7 +11,7 @@ type LoginFormState = {
 
 export default function LoginPage() {
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

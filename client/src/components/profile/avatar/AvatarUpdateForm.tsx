@@ -1,6 +1,8 @@
-import { useState, type ChangeEvent, type FormEvent, type DragEvent } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent, type DragEvent, type FormEvent } from 'react';
+
 import { type ProfileUpdateFormProps } from '../../../types/profile-update';
-import { AvatarImage } from './AvatarImage';
+
+import AvatarImage from './AvatarImage';
 
 const DEFAULT_AVATAR_SRC = '/default-avatar.svg';
 
@@ -9,34 +11,46 @@ export default function AvatarUpdateForm({
   onAvatarChange,
 }: ProfileUpdateFormProps) {
 
-  const [updateAvatar, setUpdateAvatar] = useState<File | string | null>(avatar || DEFAULT_AVATAR_SRC);
+  const [updateAvatar, setUpdateAvatar] = useState<File | string | null>(avatar?.trim() ? avatar : DEFAULT_AVATAR_SRC);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const previewUrl = useMemo(() => {
+    if (typeof updateAvatar === 'string') return updateAvatar;
+    if (updateAvatar instanceof File)
+      return URL.createObjectURL(updateAvatar);
+    return DEFAULT_AVATAR_SRC;
+  }, [updateAvatar]);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
+
   async function handleAvatarChange(e: FormEvent) {
     e.preventDefault();
-
     if (isLoading) return;
+
     setIsLoading(true);
     setIsSuccess(false);
     setError(null);
 
     try {
-      await onAvatarChange(
-        updateAvatar;
-      );
+      await onAvatarChange(updateAvatar);
       setUpdateAvatar(DEFAULT_AVATAR_SRC);
       setIsSuccess(true);
 
-    } catch (err: any) {
-      setError(err.message || "Failed to Update Avatar");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to Update Avatar");
 
     } finally {
       setIsLoading(false);
     }
   }
-// update/add file types
+
+  // update/add file types
   function isValidFile(file: File | null | undefined) {
     return !!file &&
       file.type.startsWith('image/');
@@ -56,26 +70,28 @@ export default function AvatarUpdateForm({
       setIsSuccess(false);
       return;
     }
+
     setUpdateAvatar(fileSelected);
     setError(null)
     setIsSuccess(false)
-    return;
   }
 
   function handleFileDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 
-    const droppedFile = e.dataTransfer.files[0] || null;
+    const droppedFile = e.dataTransfer.files?.[0] || null;
     if (!droppedFile) {
       setError("Please Add an Image File.")
       setIsSuccess(false);
       return;
     }
+
     if (!isValidFile(droppedFile)) {
       setError("Invalid File Type. Please Upload an Image.");
       setIsSuccess(false);
       return;
     }
+
     setUpdateAvatar(droppedFile);
     setError(null);
     setIsSuccess(false)
@@ -94,10 +110,16 @@ export default function AvatarUpdateForm({
         </h1>
 
         <div className="form-input">
+          <AvatarImage
+            className="avatar-preview"
+            avatarUrl={previewUrl}
+            size={96}
+            alt="Avatar Preview"
+          />
 
           <form
             onSubmit={handleAvatarChange}
-            autoComplete="update-avatar"
+            autoComplete="off"
             aria-busy={isLoading}
             aria-describedby={error ? "update-avatar-error"
               : undefined}
@@ -127,9 +149,8 @@ export default function AvatarUpdateForm({
                 id="updateAvatar"
                 name="updateAvatar"
                 type="file"
-                placeholder="Choose Image File"
+                accept="image/**"
                 onChange={handleFileSelect}
-                autoComplete="avatar"
                 aria-invalid={!!error}
                 aria-describedby={error ?
                   "update-avatar-error" : undefined}
@@ -139,7 +160,7 @@ export default function AvatarUpdateForm({
               <div
                 className="avatar-drop-zone"
                 onDrop={handleFileDrop}
-                onDragOver={e => e.preventDefault()}
+                onDragOver={(e) => e.preventDefault()}
               > Drag and Drop an Image File Here
               </div>
 
@@ -176,6 +197,6 @@ export default function AvatarUpdateForm({
         </div>
       </main>
     </div>
-  )
-};
+  );
+}
 
