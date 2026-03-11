@@ -1,7 +1,7 @@
-import { useState, FormEvent } from "react"
-import
-import { useNavigate}
-import { ProjectData } from "@/types/project";
+import { useState, FormEvent } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import { type ProjectData } from '../types/project';
 //import auth 
 
 // Todo add login auth check and additional steps

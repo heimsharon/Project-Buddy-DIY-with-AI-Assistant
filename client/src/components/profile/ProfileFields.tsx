@@ -1,4 +1,4 @@
-import { ProfileUpdateFormProps } from "@/types/profile-update";
+import { ProfileUpdateFormProps } from "../../types/profile-update";
 import {
   ProfileAvatar,
   AvatarUpdateForm,

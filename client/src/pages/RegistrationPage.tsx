@@ -94,7 +94,7 @@ export default function Registration() {
       setForm({ username: '', email: '', password: '', confirmPassword: '' });
       navigate('/profile-page');
 
-    } catch (err: any) {
+    } catch (err: unknown ) {
       setError(err.message || 'Failed');
 
     } finally {

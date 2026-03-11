@@ -4,7 +4,6 @@ import { type ProfileUpdateFormProps } from '../../../types/profile-update';
 
 
 export default function ChangePasswordForm({
-  password,
   onPasswordChange,
 }: ProfileUpdateFormProps) {
 
@@ -52,7 +51,7 @@ export default function ChangePasswordForm({
       return;
     }
 
-    if (newPassword !== confirmNewPassword) {
+    if (newPassword !== confirmPassword) {
       setError("Passwords Do Not Match");
       setIsLoading(false);
       return;
@@ -66,7 +65,7 @@ export default function ChangePasswordForm({
       setConfirmPassword('');
       setIsSuccess(true);
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || "Failed to Change Password");
 
     } finally {

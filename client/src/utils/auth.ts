@@ -20,7 +20,7 @@ export async function loginApi ({
   return data;
 }
 
-export async Function getProfile() {
+export async function getProfile() {
   const res = await fetch('/auth/profile', {
     credentials: 'include',
   });

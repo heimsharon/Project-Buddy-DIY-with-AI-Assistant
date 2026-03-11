@@ -1,9 +1,9 @@
-import { useState, type FormEvent, type FocusEvent } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 
 export default function SupportPage() {
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
@@ -57,7 +57,7 @@ export default function SupportPage() {
       } else {
         setError("Failed to Send Message. Please Try Again");
       }
-    } catch (error) {
+    } catch {
       setError("Network Error. Please Try Again");
     }
     setIsLoading(false);
