@@ -1,7 +1,8 @@
-import { Link, NavLink } from 'react-router-dom';
-import singleLevelDropdownMenu from './SingleLevelDropdownMenu'
+import { NavLink } from 'react-router-dom';
+
+import { singleLevelDropdownMenu } from './SingleLevelDropdownMenu'
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import '../../assets/styles/navBar.css';
+import '../../assets/styles/navbar.css';
 
 
 export default function NavBar() {
